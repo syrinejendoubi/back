@@ -4,8 +4,8 @@ const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/sendEmail");
 
 exports.register = async (req, res, next) => {
-  const { firstName, lastName, email, password,sexe } = req.body;
-  if (!firstName || !lastName || !email || !password|| !sexe) {
+  const { firstName, lastName, email, password, sexe } = req.body;
+  if (!firstName || !lastName || !email || !password || !sexe) {
     return next(
       new ErrorResponse("Veuillez fournir tous les renseignements requis", 400)
     );
@@ -24,7 +24,7 @@ exports.register = async (req, res, next) => {
     lastName,
     email,
     password,
-    sexe
+    sexe,
   });
   sendTokenResponse(user, 200, res);
 };
@@ -105,10 +105,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   if (process.env.NODE_ENV === "production") {
     options.secure = true;
   }
-  res
-    .status(statusCode)
-    .cookie("token", token, options)
-    .json({ success: true, token });
+  res.status(statusCode).cookie("token", token, options).json({ token });
 };
 
 // @desc forget password
@@ -132,8 +129,8 @@ exports.forgotPassword = async (req, res, next) => {
       message,
     });
     res.status(200).json({
-      success: true,
-      data: "Un Email de réinitialisation du mot de passe a été envoyé avec succès ",
+      message:
+        "Un Email de réinitialisation du mot de passe a été envoyé avec succès ",
     });
   } catch (err) {
     console.log(err);
@@ -142,10 +139,7 @@ exports.forgotPassword = async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
     return next(new ErrorResponse("Email n'a pas pu être envoyé", 500));
   }
-  res.status(200).json({
-    success: true,
-    data: user,
-  });
+  res.status(200).json({ user });
 };
 
 // @update user details
@@ -162,8 +156,7 @@ exports.updateDetails = async (req, res, next) => {
     runValidators: true,
   });
   res.status(200).json({
-    success: true,
-    data: user,
+    user,
   });
 };
 // @desc      Get current logged in user
@@ -174,8 +167,7 @@ exports.getMe = async (req, res, next) => {
   const user = req.user;
 
   res.status(200).json({
-    success: true,
-    data: user,
+    user,
   });
 };
 
@@ -184,7 +176,7 @@ exports.getMe = async (req, res, next) => {
 // @acces Public
 
 exports.updateEmail = async (req, res, next) => {
-  const user = req.user
+  const user = req.user;
   const resetToken = user.getResetEmailToken();
   await user.save({ validateBeforeSave: false });
   const resetURL = `${req.protocol}://${req.get(
@@ -200,8 +192,7 @@ exports.updateEmail = async (req, res, next) => {
       message,
     });
     res.status(200).json({
-      success: true,
-      data: "Un Email de réinitialisation de mail a été envoyé avec succès ",
+      message: "Un Email de réinitialisation de mail a été envoyé avec succès ",
     });
   } catch (err) {
     console.log(err);
@@ -211,8 +202,7 @@ exports.updateEmail = async (req, res, next) => {
     return next(new ErrorResponse("Email n'a pas pu être envoyé", 500));
   }
   res.status(200).json({
-    success: true,
-    data: user,
+    user,
   });
 };
 
