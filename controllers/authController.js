@@ -154,8 +154,8 @@ exports.forgotPassword = async (req, res, next) => {
 
 exports.updateDetails = async (req, res, next) => {
   const fieldToUpdate = {};
-  if (req.body.name) fieldToUpdate.name = req.body.name;
-  if (req.body.surname) fieldToUpdate.surname = req.body.surname;
+  if (req.body.firstName) fieldToUpdate.firstName = req.body.firstName;
+  if (req.body.lastName) fieldToUpdate.lastName = req.body.lastName;
 
   const user = await User.findByIdAndUpdate(req.user.id, fieldToUpdate, {
     new: true,
@@ -184,8 +184,7 @@ exports.getMe = async (req, res, next) => {
 // @acces Public
 
 exports.updateEmail = async (req, res, next) => {
-  const user = await User.findById(req.user.id);
-
+  const user = req.user
   const resetToken = user.getResetEmailToken();
   await user.save({ validateBeforeSave: false });
   const resetURL = `${req.protocol}://${req.get(
