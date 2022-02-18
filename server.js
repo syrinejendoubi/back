@@ -8,6 +8,7 @@ const express = require("express");
 const ConnectDB = require("./config/db");
 const errorHandler = require("./middleware/errorMiddleware");
 const auth = require("./routes/api/authRoutes");
+const users = require("./routes/api/usersRoutes");
 const app = express();
 const cookieParser = require("cookie-parser");
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 app.use("/api", auth);
+app.use("/api",users) ;
 app.use(errorHandler);
 app.all("*",(req,res,next) =>{
   res.status(404).json({
