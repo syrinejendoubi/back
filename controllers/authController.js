@@ -3,6 +3,22 @@ const User = require("../models/userModel");
 const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/sendEmail");
 
+const sendTokenResponse = (user, statusCode, res) => {
+  const token = user.getSignedJwtToken();
+
+  const options = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
+    http_only: true,
+  };
+
+  if (process.env.NODE_ENV === "production") {
+    options.secure = true;
+  }
+  res.status(statusCode).cookie("token", token, options).json({ token });
+};
+
 exports.register = async (req, res, next) => {
   const { firstName, lastName, email, password, sexe } = req.body;
   if (!firstName || !lastName || !email || !password || !sexe) {
@@ -58,7 +74,7 @@ exports.login = async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 };
 
-exports.logout = async (req, res, next) => {
+exports.logout = async (req, res) => {
   res.cookie("token", "none", {
     expires: new Date(Date.now() + 1000),
     http_only: true,
@@ -90,22 +106,6 @@ exports.resetPassword = async (req, res, next) => {
   user.resetPassworExpire = undefined;
   await user.save();
   sendTokenResponse(user, 200, res);
-};
-
-const sendTokenResponse = (user, statusCode, res) => {
-  const token = user.getSignedJwtToken();
-
-  const options = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-    ),
-    http_only: true,
-  };
-
-  if (process.env.NODE_ENV === "production") {
-    options.secure = true;
-  }
-  res.status(statusCode).cookie("token", token, options).json({ token });
 };
 
 // @desc forget password
@@ -146,7 +146,7 @@ exports.forgotPassword = async (req, res, next) => {
 // @route put /api/updatedetails
 // @access private
 
-exports.updateDetails = async (req, res, next) => {
+exports.updateDetails = async (req, res) => {
   const fieldToUpdate = {};
   if (req.body.firstName) fieldToUpdate.firstName = req.body.firstName;
   if (req.body.lastName) fieldToUpdate.lastName = req.body.lastName;
@@ -162,9 +162,9 @@ exports.updateDetails = async (req, res, next) => {
 // @desc      Get current logged in user
 // @route     GET /api/auth/me
 // @access    Private
-exports.getMe = async (req, res, next) => {
+exports.getMe = async (req, res) => {
   // user is already available in req due to the protect middleware
-  const user = req.user;
+  const { user } = req;
 
   res.status(200).json({
     user,
@@ -176,7 +176,7 @@ exports.getMe = async (req, res, next) => {
 // @acces Public
 
 exports.updateEmail = async (req, res, next) => {
-  const user = req.user;
+  const { user } = req;
   const resetToken = user.getResetEmailToken();
   await user.save({ validateBeforeSave: false });
   const resetURL = `${req.protocol}://${req.get(

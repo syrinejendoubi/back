@@ -35,25 +35,25 @@ const userSchema = new mongoose.Schema({
     minlength: [6, "le mot de passe doit comporter au moins 6 caractères"],
     select: false,
   },
-  dateOfBirth:{
-    type:String,
-    required:false
+  dateOfBirth: {
+    type: String,
+    required: false,
   },
-  city:{
-    type:String,
-    required:false
+  city: {
+    type: String,
+    required: false,
   },
-  weight:{
-    type:Number,
-    required:false
+  weight: {
+    type: Number,
+    required: false,
   },
   subscription: {
-    type:String,
-    enum:["Free","Premium","Basic"],
-    default:"Free"
+    type: String,
+    enum: ["Free", "Premium", "Basic"],
+    default: "Free",
   },
-  sexe:{
-    type:String,
+  sexe: {
+    type: String,
     enum: ["Male", "Femelle"],
     required: [true, "veuillez sélectionner votre sexe"],
   },
