@@ -38,7 +38,13 @@ components:
           type: string
         role:
           type: string
-            
+    Disciplined:
+      type: object
+      properties:
+        label :
+          type: string
+        icon :
+          type: string        
   
         
     UserLogin:
@@ -54,6 +60,8 @@ security:
 tags:
   - name: user
     description: Operations about User
+  - name: disciplined
+    description: Operations about Disciplined
 
 paths:
   /users:
@@ -142,6 +150,80 @@ paths:
           schema:
             type : string
            
+      responses: 
+        '200':
+          description: OK
+  /disciplineds:
+    get:
+      tags:
+        - disciplined
+      summary: Get All Disciplineds 
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32 
+    post:
+      tags:
+        - disciplined
+      summary: Add a new Disciplined 
+      requestBody:
+        content:
+          application/json:    # Media type
+            schema:            # Request body contents
+              $ref: '#/components/schemas/Disciplined'   # Reference to an object
+      responses:
+        '200':
+          description: OK
+
+  /disciplineds/{Id}:
+    get:
+      tags:
+        - disciplined
+      summary: Returns a disciplined by ID. 
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type : string
+      responses: 
+        '200':
+          description: OK
+    put:
+      tags:
+        - disciplined
+      summary: Update a disciplined by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type : string
+      requestBody:
+        content:
+          application/json:    # Media type
+            schema:            # Request body contents
+              $ref: '#/components/schemas/Disciplined'   
+      responses: 
+        '200':
+          description: OK
+    delete:
+      tags:
+        - disciplined
+      summary: Delete a disciplined by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type : string  
       responses: 
         '200':
           description: OK

@@ -7,13 +7,15 @@ process.on("uncaughtException",err=>{
 const express = require("express");
 const ConnectDB = require("./config/db");
 const errorHandler = require("./middleware/errorMiddleware");
-const auth = require("./routes/api/authRoutes");
-const users = require("./routes/api/usersRoutes");
 const app = express();
 const cookieParser = require("cookie-parser");
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
+
+const auth = require("./routes/api/authRoutes");
+const users = require("./routes/api/usersRoutes");
+const disciplined = require("./routes/api/disciplinedsRoutes");
 
 const cors = require("cors");
 ConnectDB();
@@ -23,6 +25,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use("/api", auth);
 app.use("/api",users) ;
+app.use('/api',disciplined)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(errorHandler);
 app.all("*",(req,res,next) =>{
