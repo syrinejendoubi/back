@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Input, Button, Row, Col, DatePicker, Select } from "antd";
 const { Option } = Select;
 import moment from "moment";
-import "./register.css";
+import "./Register.css";
 const index = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
@@ -26,7 +26,7 @@ const index = () => {
           validateMessages={validateMessages}
           onFinish={onFinish}
         >
-          <h1 className="register-label">Register</h1>
+          <h1 className="register-label">Inscription</h1>
           <br />
           <Row>
             <Col span={11}>
@@ -74,6 +74,39 @@ const index = () => {
               </Form.Item>
             </Col>
             <Col span={11} offset={2}>
+              <p>date de naissance :</p>
+              <Form.Item
+                name="date de naissance"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <DatePicker
+                  format={"DD/MM/YYYY"}
+                  placeholder="date"
+                  style={{ display: "flex" }}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={11}>
+              <p>email :</p>
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    type: "email",
+                  },
+                ]}
+              >
+                <Input placeholder="email" />
+              </Form.Item>
+            </Col>
+            <Col span={11} offset={2}>
               <p>mot de passe :</p>
               <Form.Item
                 name="mot de passe"
@@ -92,52 +125,16 @@ const index = () => {
               </Form.Item>
             </Col>
           </Row>
-          <Row>
-            <Col span={11}>
-              <p>date de naissance :</p>
-              <Form.Item
-                name="date de naissance"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <DatePicker
-                  defaultValue={moment("1990/01/01", "DD/MM/YYYY")}
-                  format={"DD/MM/YYYY"}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={11} offset={2}>
-              <p>nom :</p>
-              <Form.Item
-                name="dazd"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input placeholder="nom" />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <a className="register-form-forgot" href="">
-            mot de passe oublié?
-          </a>
-          <br />
           <Form.Item>
             <Button
               type="primary"
               htmlType="submit"
               className="register-form-button"
             >
-              Log in
+              S'inscrire
             </Button>
             <div style={{ marginTop: "5px" }}>
-              Ou <a href="">inscrivez-vous!</a>
+              <a href="">Vous avez déjà un compte?</a>
             </div>
           </Form.Item>
         </Form>
