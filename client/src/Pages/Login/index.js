@@ -1,5 +1,5 @@
 import React from "react";
-import "./login.css";
+import "./Login.css";
 import { Form, Input, Button } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 const Login = () => {
@@ -58,10 +58,7 @@ const Login = () => {
             placeholder="mot de passe"
           />
         </Form.Item>
-        <a className="login-form-forgot" href="">
-          mot de passe oublié?
-        </a>
-        <br />
+
         <Form.Item>
           <Button
             type="primary"
