@@ -4,7 +4,7 @@ const disciplineSchema = new mongoose.Schema(
     {
         label: {
             type: String,
-            required: [true, "label is required"]
+            required: [true, "veuillez entrer label "]
         },
         icon : String 
     },
