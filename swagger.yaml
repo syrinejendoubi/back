@@ -1,12 +1,11 @@
 openapi: "3.0.0"
 info:
-  description: 'HiCotech api doc.'
+  description: "HiCotech api doc."
   version: "0.1.0"
   title: HiCotech API 2021
 
 servers:
-  - url: 'http://127.0.0.1:5000/api'
-
+  - url: "http://localhost:5000/api"
 
 components:
   securitySchemes:
@@ -43,12 +42,11 @@ components:
     Discipline:
       type: object
       properties:
-        label :
+        label:
           type: string
-        icon :
-          type: string        
-  
-        
+        icon:
+          type: string
+
     UserLogin:
       type: object
       properties:
@@ -56,9 +54,9 @@ components:
           type: string
         password:
           type: string
-                       
+
 security:
-  -  Token: [] # Require token for all requests (unless otherwise specified)
+  - Token: [] # Require token for all requests (unless otherwise specified)
 tags:
   - name: user
     description: Operations about User
@@ -70,57 +68,57 @@ paths:
     get:
       tags:
         - user
-      summary: Get All Users 
+      summary: Get All Users
       produces:
         - application/json
       parameters: []
       responses:
-        '200':
+        "200":
           description: successful operation
           schema:
             type: object
             additionalProperties:
               type: integer
-              format: int32 
+              format: int32
     post:
       tags:
         - user
-      summary: Add a new User 
+      summary: Add a new User
       requestBody:
         content:
-          application/json:    # Media type
-            schema:            # Request body contents
-              $ref: '#/components/schemas/User'   # Reference to an object
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/User" # Reference to an object
       responses:
-        '200':
+        "200":
           description: OK
-  /login: 
+  /login:
     post:
       tags:
         - user
-      summary: Login   User 
+      summary: Login   User
       requestBody:
         content:
-          application/json:    # Media type
-            schema:            # Request body contents
-              $ref: '#/components/schemas/UserLogin'   # Reference to an object
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/UserLogin" # Reference to an object
       responses:
-        '200':
+        "200":
           description: OK
 
   /users/{Id}:
     get:
       tags:
         - user
-      summary: Returns a user by ID. 
+      summary: Returns a user by ID.
       parameters:
         - name: Id
           in: path
           required: true
           schema:
-            type : string
-      responses: 
-        '200':
+            type: string
+      responses:
+        "200":
           description: OK
     put:
       tags:
@@ -131,15 +129,15 @@ paths:
           in: path
           required: true
           schema:
-            type : string
+            type: string
 
       requestBody:
         content:
-          application/json:    # Media type
-            schema:            # Request body contents
-              $ref: '#/components/schemas/User'   
-      responses: 
-        '200':
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
           description: OK
     delete:
       tags:
@@ -150,53 +148,53 @@ paths:
           in: path
           required: true
           schema:
-            type : string
-           
-      responses: 
-        '200':
+            type: string
+
+      responses:
+        "200":
           description: OK
   /disciplines:
     get:
       tags:
         - discipline
-      summary: Get All Disciplines 
+      summary: Get All Disciplines
       produces:
         - application/json
       parameters: []
       responses:
-        '200':
+        "200":
           description: successful operation
           schema:
             type: object
             additionalProperties:
               type: integer
-              format: int32 
+              format: int32
     post:
       tags:
         - discipline
-      summary: Add a new Discipline 
+      summary: Add a new Discipline
       requestBody:
         content:
-          application/json:    # Media type
-            schema:            # Request body contents
-              $ref: '#/components/schemas/Discipline'   # Reference to an object
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Discipline" # Reference to an object
       responses:
-        '200':
+        "200":
           description: OK
 
   /disciplines/{Id}:
     get:
       tags:
         - discipline
-      summary: Returns a discipline by ID. 
+      summary: Returns a discipline by ID.
       parameters:
         - name: Id
           in: path
           required: true
           schema:
-            type : string
-      responses: 
-        '200':
+            type: string
+      responses:
+        "200":
           description: OK
     put:
       tags:
@@ -207,14 +205,14 @@ paths:
           in: path
           required: true
           schema:
-            type : string
+            type: string
       requestBody:
         content:
-          application/json:    # Media type
-            schema:            # Request body contents
-              $ref: '#/components/schemas/Discipline'   
-      responses: 
-        '200':
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Discipline"
+      responses:
+        "200":
           description: OK
     delete:
       tags:
@@ -225,8 +223,7 @@ paths:
           in: path
           required: true
           schema:
-            type : string  
-      responses: 
-        '200':
+            type: string
+      responses:
+        "200":
           description: OK
-  

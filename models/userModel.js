@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema({
   },
   sexe: {
     type: String,
-    enum: ["Male", "Femelle"],
+    enum: ["Homme", "Femme"],
     required: [true, "veuillez sélectionner votre sexe"],
   },
   resetPasswordToken: String,
