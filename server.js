@@ -15,7 +15,7 @@ const swaggerDocument = YAML.load('./swagger.yaml');
 
 const auth = require("./routes/api/authRoutes");
 const users = require("./routes/api/usersRoutes");
-const disciplined = require("./routes/api/disciplinedsRoutes");
+const discipline = require("./routes/api/disciplinesRoutes");
 
 const cors = require("cors");
 ConnectDB();
@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use("/api", auth);
 app.use("/api",users) ;
-app.use('/api',disciplined)
+app.use('/api',discipline)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(errorHandler);
 app.all("*",(req,res,next) =>{
