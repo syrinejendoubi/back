@@ -26,7 +26,7 @@ exports.createUser = (req, res) => {
 
 // Retrieve all users from the database.
 exports.findAllUser = (req, res) => {
-    User.find()
+    User.find().populate('discipline')
     .then(users => {
         res.send(users);
     }).catch(err => {
@@ -38,7 +38,7 @@ exports.findAllUser = (req, res) => {
 
 // Find a single user with a userId
 exports.findUser = (req, res) => {
-    User.findById(req.params.userId)
+    User.findById(req.params.userId).populate('discipline')
     .then(user => {
         if(!user) {
             return res.status(404).send({

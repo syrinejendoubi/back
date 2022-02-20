@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema({
   },
   sexe: {
     type: String,
-    enum: ["Male", "Femelle"],
+    enum: ["Homme", "Femme"],
     required: [true, "veuillez sélectionner votre sexe"],
   },
   resetPasswordToken: String,
@@ -65,6 +65,12 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  discipline: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Discipline"
+  }
+
+
 });
 
 userSchema.pre("save", async function (next) {
