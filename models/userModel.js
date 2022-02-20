@@ -65,6 +65,12 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  discipline: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Discipline"
+  }
+
+
 });
 
 userSchema.pre("save", async function (next) {

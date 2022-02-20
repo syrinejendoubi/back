@@ -38,7 +38,9 @@ components:
           type: string
         role:
           type: string
-    Disciplined:
+        discipline:
+          type: string
+    Discipline:
       type: object
       properties:
         label :
@@ -60,8 +62,8 @@ security:
 tags:
   - name: user
     description: Operations about User
-  - name: disciplined
-    description: Operations about Disciplined
+  - name: discipline
+    description: Operations about Discipline
 
 paths:
   /users:
@@ -153,11 +155,11 @@ paths:
       responses: 
         '200':
           description: OK
-  /disciplineds:
+  /disciplines:
     get:
       tags:
-        - disciplined
-      summary: Get All Disciplineds 
+        - discipline
+      summary: Get All Disciplines 
       produces:
         - application/json
       parameters: []
@@ -171,22 +173,22 @@ paths:
               format: int32 
     post:
       tags:
-        - disciplined
-      summary: Add a new Disciplined 
+        - discipline
+      summary: Add a new Discipline 
       requestBody:
         content:
           application/json:    # Media type
             schema:            # Request body contents
-              $ref: '#/components/schemas/Disciplined'   # Reference to an object
+              $ref: '#/components/schemas/Discipline'   # Reference to an object
       responses:
         '200':
           description: OK
 
-  /disciplineds/{Id}:
+  /disciplines/{Id}:
     get:
       tags:
-        - disciplined
-      summary: Returns a disciplined by ID. 
+        - discipline
+      summary: Returns a discipline by ID. 
       parameters:
         - name: Id
           in: path
@@ -198,8 +200,8 @@ paths:
           description: OK
     put:
       tags:
-        - disciplined
-      summary: Update a disciplined by ID.
+        - discipline
+      summary: Update a discipline by ID.
       parameters:
         - name: Id
           in: path
@@ -210,14 +212,14 @@ paths:
         content:
           application/json:    # Media type
             schema:            # Request body contents
-              $ref: '#/components/schemas/Disciplined'   
+              $ref: '#/components/schemas/Discipline'   
       responses: 
         '200':
           description: OK
     delete:
       tags:
-        - disciplined
-      summary: Delete a disciplined by ID.
+        - discipline
+      summary: Delete a discipline by ID.
       parameters:
         - name: Id
           in: path

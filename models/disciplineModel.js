@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const disciplinedSchema = new mongoose.Schema(
+const disciplineSchema = new mongoose.Schema(
     {
         label: {
             type: String,
-            required: [true, "label is required"]
+            required: [true, "veuillez entrer label "]
         },
         icon : String 
     },
@@ -12,4 +12,4 @@ const disciplinedSchema = new mongoose.Schema(
     }
     );
 
-module.exports = mongoose.model("Disciplined", disciplinedSchema);
+module.exports = mongoose.model("Discipline", disciplineSchema);
