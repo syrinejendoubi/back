@@ -6,6 +6,7 @@ info:
 
 servers:
   - url: "http://localhost:5000/api"
+  - url: "http://127.0.0.1:5000/api"
 
 components:
   securitySchemes:
@@ -71,7 +72,22 @@ paths:
       summary: Get All Users
       produces:
         - application/json
-      parameters: []
+      parameters:
+        - name: email
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: role
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: discipline
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         "200":
           description: successful operation
@@ -160,7 +176,12 @@ paths:
       summary: Get All Disciplines
       produces:
         - application/json
-      parameters: []
+      parameters:
+        - name: label
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         "200":
           description: successful operation

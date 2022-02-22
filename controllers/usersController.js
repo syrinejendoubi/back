@@ -26,7 +26,8 @@ exports.createUser = (req, res) => {
 
 // Retrieve all users from the database.
 exports.findAllUser = (req, res) => {
-    User.find().populate('discipline')
+    const data = req.query  ;
+    User.find(data).populate('discipline')
     .then(users => {
         res.send(users);
     }).catch(err => {

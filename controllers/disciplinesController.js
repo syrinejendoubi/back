@@ -26,7 +26,8 @@ exports.createDiscipline = (req, res) => {
 
 // Retrieve all disciplines from the database.
 exports.findAllDiscipline = (req, res) => {
-    Discipline.find()
+    const data = req.query  ;
+    Discipline.find(data)
     .then(disciplines => {
         res.send(disciplines);
     }).catch(err => {
