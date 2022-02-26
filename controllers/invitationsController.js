@@ -1,7 +1,8 @@
 const Invitation = require("../models/invitationModel");
+const sendEmail = require("../utils/sendEmail");
 
 //Create new Invitation
-exports.createInvitation = (req, res) => {
+exports.createInvitation = async (req, res) => {
     // Request validation
     const invitationData = req.body ;
     if(Object.keys(req.body).length === 0) {
@@ -14,13 +15,29 @@ exports.createInvitation = (req, res) => {
 
     // Save Invitation in the database
     invitation.save()
-    .then(data => {
-        res.send(data);
-    }).catch(err => {
+    .catch(err => {
         res.status(500).send({
             message: err.message || "Something wrong while creating the invitation."
         });
     });
+    
+    const url = `http://127.0.0.1:3000/invitation/${invitation.id}`;
+    const message = `<html><body><h1>invitation HiCotech </h1><a href=${url}>Accepter</a></body></html>` ;
+    try {
+        await sendEmail({
+            email: invitation.email,
+            subject: "Invitation Hicotech",
+            message,
+        });
+        res.status(200).json({
+            message:
+              "invitation envoyée avec succès ",
+          });
+    } catch (err) {
+        return next(new ErrorResponse("Email n'a pas pu être envoyé", 500));
+    }
+        
+    
 };
 
 // Retrieve all invitations from the database.
