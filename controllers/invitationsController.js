@@ -1,5 +1,7 @@
 const Invitation = require("../models/invitationModel");
 const sendEmail = require("../utils/sendEmail");
+var jsrender = require('jsrender');
+const User = require("../models/userModel");
 
 //Create new Invitation
 exports.createInvitation = async (req, res) => {
@@ -21,8 +23,14 @@ exports.createInvitation = async (req, res) => {
         });
     });
     
-    const url = `http://127.0.0.1:3000/invitation/${invitation.id}`;
-    const message = `<html><body><h1>invitation HiCotech </h1><a href=${url}>Accepter</a></body></html>` ;
+    const tmpl = jsrender.templates('./templates/invitation.html');
+    const user = await User.findById( invitation.creacteBy);
+    
+    const message = tmpl.render({ 
+                        firstName : invitation.userData.firstName,
+                        creacteBy : user ,
+                        id : invitation.id
+                    });
     try {
         await sendEmail({
             email: invitation.email,
@@ -55,7 +63,7 @@ exports.findAllInvitation = (req, res) => {
 
 // Find a single invitation with a invitationId
 exports.findInvitation = (req, res) => {
-    Invitation.findById(req.params.invitationId)
+    Invitation.findById(req.params.invitationId).populate('creacteBy')
     .then(invitation => {
         if(!invitation) {
             return res.status(404).send({
