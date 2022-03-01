@@ -5,14 +5,14 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
+    "start": "nodemon server",
     "server": "nodemon server --ignore client",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
     "lint": "eslint --ignore-path .gitignore .",
     "check-format": "prettier --ignore-path .gitignore --list-different \"**/*.+(js|json)\"",
     "format": "prettier --write  --ignore-path .gitignore \"**/*.+(js|json)\"",
-    "validate": "npm run check-format && npm run lint"
+    "validate": "npm run check-format & npm run lint"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "express-async-errors": "^3.1.1",
+    "husky": "^4.3.8",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.1",
     "nodemailer": "^6.7.2",
@@ -39,31 +40,9 @@
     "validator": "^13.7.0",
     "yamljs": "^0.3.0"
   },
-  "lint-staged": {
-    "*.+(js|jsx)": [
-      "eslint"
-    ],
-    "**/*.+(js|json|jsx)": [
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run validate"
-    }
-  },
+
+
   "devDependencies": {
-    "concurrently": "^7.0.0",
-    "eslint": "^8.9.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.3.4",
-    "prettier": "^2.5.1"
+    "concurrently": "^7.0.0"
   }
 }

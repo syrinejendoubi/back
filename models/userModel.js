@@ -3,6 +3,7 @@ const isEmail = require("validator/lib/isEmail");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -36,7 +37,7 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
   dateOfBirth: {
-    type: String,
+    type: Date,
     required: false,
   },
   city: {
@@ -67,10 +68,8 @@ const userSchema = new mongoose.Schema({
   },
   discipline: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Discipline"
-  }
-
-
+    ref: "Discipline",
+  },
 });
 
 userSchema.pre("save", async function (next) {
