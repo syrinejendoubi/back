@@ -26,10 +26,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 app.use("/api", auth);
-app.use("/api",users) ;
-app.use('/api',discipline)
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api", users);
+app.use("/api", discipline);
 app.use(errorHandler);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.all("*", (req, res) => {
   res.status(404).json({
     message: `Impossible de trouver le route ${req.originalUrl} `,
