@@ -1,13 +1,19 @@
 const Statistic = require("../models/statisticModel");
+const ErrorResponse = require("../utils/errorResponse");
 
-exports.CreateStatistic = (req, res) => {
-  const StatisticData = res.body;
-  if (Object.keys(req.body).length === 0) {
+exports.CreateStatistic = async (req, res, next) => {
+  const statisticData = req.body;
+  const { statisticName } = req.body;
+  if (Object.keys(statisticData).length === 0) {
     return res.status(400).send({
       message: "Les champs de contenu des statistiques ne peut pas être vide",
     });
   }
-  const statistic = new Statistic(StatisticData);
+  const existingStatistic = await Statistic.findOne({ statisticName });
+  if (existingStatistic) {
+    return next(new ErrorResponse("Statistique existe déjà.", 401));
+  }
+  const statistic = new Statistic(statisticData);
   statistic
     .save()
     .then((data) => {
@@ -25,8 +31,7 @@ exports.CreateStatistic = (req, res) => {
 // Retrieve all invitations from the database.
 exports.findAllStatistic = (req, res) => {
   const data = req.query;
-  statistic
-    .find(data)
+  Statistic.find(data)
     .then((stat) => {
       res.send(stat);
     })

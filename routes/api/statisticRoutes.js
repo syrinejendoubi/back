@@ -8,7 +8,7 @@ const {
   findAllStatistic,
 } = require("../../controllers/statisticController");
 
-router.post("/createStatistic", CreateStatistic);
+router.post("/createStatistic", protect, CreateStatistic);
 
 router.get("/all/statistics", protect, findAllStatistic);
 
