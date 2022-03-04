@@ -27,7 +27,7 @@ ConnectDB();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
-app.use("/api", auth, users, discipline, invitations, statistique);
+app.use("/api", auth , users , discipline,invitations);
 app.use(errorHandler);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.all("*", (req, res) => {
