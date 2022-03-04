@@ -15,7 +15,8 @@ const auth = require("./routes/api/authRoutes");
 const errorHandler = require("./middleware/errorMiddleware");
 const users = require("./routes/api/usersRoutes");
 const discipline = require("./routes/api/disciplinesRoutes");
-const invitations = require("./routes/api/InvitationsRoutes");
+const invitations = require("./routes/api/invitationsRoutes");
+const statistique = require("./routes/api/statisticRoutes");
 
 const swaggerDocument = YAML.load("./swagger.yaml");
 
@@ -26,7 +27,7 @@ ConnectDB();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
-app.use("/api", auth, users, discipline, invitations);
+app.use("/api", auth , users , discipline,invitations);
 app.use(errorHandler);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.all("*", (req, res) => {
