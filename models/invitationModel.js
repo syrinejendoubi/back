@@ -19,6 +19,7 @@ const invitationSchema = new mongoose.Schema(
             required: "l'adresse email est obligatoire",
             validate: [isEmail, "veuillez saisir une adresse e-mail valide"],
           },
+        userData : {}
     },
     {   timestamps: true 
     }

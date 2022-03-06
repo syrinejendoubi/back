@@ -1,7 +1,10 @@
 const Invitation = require("../models/invitationModel");
+const sendEmail = require("../utils/sendEmail");
+var jsrender = require('jsrender');
+const User = require("../models/userModel");
 
 //Create new Invitation
-exports.createInvitation = (req, res) => {
+exports.createInvitation = async (req, res) => {
     // Request validation
     const invitationData = req.body ;
     if(Object.keys(req.body).length === 0) {
@@ -14,13 +17,35 @@ exports.createInvitation = (req, res) => {
 
     // Save Invitation in the database
     invitation.save()
-    .then(data => {
-        res.send(data);
-    }).catch(err => {
+    .catch(err => {
         res.status(500).send({
             message: err.message || "Something wrong while creating the invitation."
         });
     });
+    
+    const tmpl = jsrender.templates('./templates/invitation.html');
+    const user = await User.findById( invitation.creacteBy);
+    
+    const message = tmpl.render({ 
+                        firstName : invitation.userData.firstName,
+                        creacteBy : user ,
+                        id : invitation.id
+                    });
+    try {
+        await sendEmail({
+            email: invitation.email,
+            subject: "Invitation Hicotech",
+            message,
+        });
+        res.status(200).json({
+            message:
+              "invitation envoyée avec succès ",
+          });
+    } catch (err) {
+        return next(new ErrorResponse("Email n'a pas pu être envoyé", 500));
+    }
+        
+    
 };
 
 // Retrieve all invitations from the database.
@@ -38,7 +63,7 @@ exports.findAllInvitation = (req, res) => {
 
 // Find a single invitation with a invitationId
 exports.findInvitation = (req, res) => {
-    Invitation.findById(req.params.invitationId)
+    Invitation.findById(req.params.invitationId).populate('creacteBy')
     .then(invitation => {
         if(!invitation) {
             return res.status(404).send({
