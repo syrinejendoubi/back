@@ -8,15 +8,15 @@ const {
   findAllStatistic,
 } = require("../../controllers/statisticController");
 
-router.post("/createStatistic", protect, CreateStatistic);
+router.post("/createStatistic", CreateStatistic);
 
-router.get("/all/statistics", protect, findAllStatistic);
+router.get("/all/statistics", findAllStatistic);
 
 // get statistic by id
-router.get("/statistic/:statisticId", protect, findSingleStatistic);
+router.get("/statistic/:statisticId", findSingleStatistic);
 // update statistic
-router.put("/statistic/:statisticId", protect, updateStatistic);
+router.put("/statistic/:statisticId", updateStatistic);
 // delete statistic
-router.delete("/statistic/:statisticId", protect, deleteStatistic);
+router.delete("/statistic/:statisticId", deleteStatistic);
 
 module.exports = router;
