@@ -20,8 +20,17 @@ const sendTokenResponse = (user, statusCode, res) => {
 };
 
 exports.register = async (req, res, next) => {
-  const { firstName, lastName, email, password, sexe } = req.body;
-  if (!firstName || !lastName || !email || !password || !sexe) {
+  const { firstName, lastName, email, password, sexe, city, dateOfBirth } =
+    req.body;
+  if (
+    !firstName ||
+    !lastName ||
+    !email ||
+    !password ||
+    !sexe ||
+    !city ||
+    !dateOfBirth
+  ) {
     return next(
       new ErrorResponse("Veuillez fournir tous les renseignements requis", 400)
     );
@@ -41,6 +50,8 @@ exports.register = async (req, res, next) => {
     email,
     password,
     sexe,
+    city,
+    dateOfBirth,
   });
   sendTokenResponse(user, 200, res);
 };
@@ -133,7 +144,6 @@ exports.forgotPassword = async (req, res, next) => {
         "Un Email de réinitialisation du mot de passe a été envoyé avec succès ",
     });
   } catch (err) {
-    console.log(err);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save({ validateBeforeSave: false });
