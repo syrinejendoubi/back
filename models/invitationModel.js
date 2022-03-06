@@ -5,7 +5,7 @@ const invitationSchema = new mongoose.Schema(
         dateExpiration: Date ,
         etat : {
             type : String ,
-            enum : ["accepté","refusé","envoyé","annulé"]
+            enum : ["accepté","refusé","envoyé","annulé","consulté"]
 
         } ,
         creacteBy : {
@@ -19,7 +19,11 @@ const invitationSchema = new mongoose.Schema(
             required: "l'adresse email est obligatoire",
             validate: [isEmail, "veuillez saisir une adresse e-mail valide"],
           },
-        userData : {}
+        userData : {},
+        expired : {
+            type: Boolean,
+            default : false
+        } 
     },
     {   timestamps: true 
     }
