@@ -22,10 +22,8 @@ exports.createInvitation = async (req, res) => {
             message: err.message || "Something wrong while creating the invitation."
         });
     });
-    
     const tmpl = jsrender.templates('./templates/invitation.html');
     const user = await User.findById( invitation.creacteBy);
-    
     const message = tmpl.render({ 
                         firstName : invitation.userData.firstName,
                         creacteBy : user ,
@@ -39,7 +37,7 @@ exports.createInvitation = async (req, res) => {
         });
         res.status(200).json({
             message:
-              "invitation envoyée avec succès ",
+              "Invitation envoyée avec succès ",
           });
     } catch (err) {
         return next(new ErrorResponse("Email n'a pas pu être envoyé", 500));
