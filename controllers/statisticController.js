@@ -29,19 +29,26 @@ exports.CreateStatistic = async (req, res, next) => {
 };
 
 // Retrieve all invitations from the database.
-exports.findAllStatistic = (req, res) => {
-  const data = req.query;
-  Statistic.find(data)
-    .then((stat) => {
-      res.send(stat);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message ||
-          "Un problème est survenu lors de la récupération des statistiques.",
-      });
+exports.findAllStatistic = async (req, res) => {
+  try {
+    const PAGE_SIZE = 3;
+    const page = parseInt(req.query.page) || "0";
+    const total = await Statistic.countDocuments({});
+    const statistic = await Statistic.find({})
+      .limit(PAGE_SIZE)
+      .skip(PAGE_SIZE * page);
+    res.json({
+      totalpages: Math.ceil(total / PAGE_SIZE),
+      statistic,
     });
+    // const limit = req.query.limit * 1 || 100;
+  } catch (err) {
+    res.status(500).send({
+      message:
+        err.message ||
+        "Un problème est survenu lors de la récupération des statistiques.",
+    });
+  }
 };
 
 // Find a single invitation with a invitationId

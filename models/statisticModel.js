@@ -9,7 +9,7 @@ const statisticSchema = new mongoose.Schema({
   statisticType: {
     type: String,
     required: [true, "veuillez entrer le type de la statistique"],
-    enum: ["counter", "timer"],
+    enum: ["compteur", "timer"],
   },
   unit: {
     type: String,
@@ -22,6 +22,10 @@ const statisticSchema = new mongoose.Schema({
   lien: {
     type: String,
     required: false,
+  },
+  max: {
+    type: Boolean,
+    required: true,
   },
   visible: {
     type: Boolean,
