@@ -63,7 +63,7 @@ exports.findAllInvitation = (req, res) => {
 
 // Find a single invitation with a invitationId
 exports.findInvitation = (req, res) => {
-    Invitation.findById(req.params.invitationId).populate('creacteBy')
+    Invitation.findById(req.params.invitationId).populate('creacteBy').populate('acceptedBy')
     .then(invitation => {
         if(!invitation) {
             return res.status(404).send({
