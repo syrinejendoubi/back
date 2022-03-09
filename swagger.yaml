@@ -58,7 +58,12 @@ components:
           type: string
         etat:
           type: string
+        expired:
+          type: boolean
+          default: false 
         userData:
+          $ref: "#/components/schemas/User"
+        acceptedBy:
           $ref: "#/components/schemas/User"
     UserLogin:
       type: object
