@@ -47,7 +47,24 @@ components:
           type: string
         icon:
           type: string
-
+    Invitation:
+      type: object
+      properties:
+        email:
+          type: string
+        creacteBy:
+          type: string
+        dateExpiration:
+          type: string
+        etat:
+          type: string
+        expired:
+          type: boolean
+          default: false 
+        userData:
+          $ref: "#/components/schemas/User"
+        acceptedBy:
+          $ref: "#/components/schemas/User"
     UserLogin:
       type: object
       properties:
@@ -63,6 +80,8 @@ tags:
     description: Operations about User
   - name: discipline
     description: Operations about Discipline
+  - name: invitation
+    description: Operations about Invitation
 
 paths:
   /users:
@@ -239,6 +258,90 @@ paths:
       tags:
         - discipline
       summary: Delete a discipline by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /invitations:
+    get:
+      tags:
+        - invitation
+      summary: Get All Invitations
+      produces:
+        - application/json
+      parameters:
+        - name: etat
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: creacteBy
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+    post:
+      tags:
+        - invitation
+      summary: Add a new Invitation
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Invitation" # Reference to an object
+      responses:
+        "200":
+          description: OK
+
+  /invitations/{Id}:
+    get:
+      tags:
+        - invitation
+      summary: Returns a invitation by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+        - invitation
+      summary: Update a invitation by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Invitation"
+      responses:
+        "200":
+          description: OK
+    delete:
+      tags:
+        - invitation
+      summary: Delete a invitation by ID.
       parameters:
         - name: Id
           in: path
