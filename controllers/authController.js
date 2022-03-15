@@ -16,7 +16,8 @@ const sendTokenResponse = (user, statusCode, res) => {
   if (process.env.NODE_ENV === "production") {
     options.secure = true;
   }
-  res.status(statusCode).cookie("token", token, options).json({ token });
+  user.password = undefined;
+  res.status(statusCode).json({ user, token });
 };
 
 exports.register = async (req, res, next) => {
