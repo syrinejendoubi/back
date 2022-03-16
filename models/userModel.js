@@ -84,6 +84,7 @@ userSchema.methods.getSignedJwtToken = function () {
     firstName: this.firstName,
     lastName: this.lastName,
     role: this.role,
+    discipline: this.discipline,
   };
   return jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
