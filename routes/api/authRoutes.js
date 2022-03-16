@@ -21,5 +21,5 @@ router.put("/updatepassword", protect, authorize("coach"), updatePassword);
 router.post("/forgotpassword", forgotPassword);
 router.put("/resetpassword/:resettoken", resetPassword);
 router.put("/resetemail/:resettoken", resetEmail);
-router.get("/me", protect, authorize("coach"), getMe);
+router.get("/me", protect, authorize("coach", "joueur"), getMe);
 module.exports = router;

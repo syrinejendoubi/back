@@ -1,20 +1,11 @@
 const mongoose = require("mongoose");
 
-const statisticSchema = new mongoose.Schema(
+const skillsSchema = new mongoose.Schema(
   {
-    statisticName: {
+    skillName: {
       type: String,
-      required: [true, "veuillez entrer le nom de la statistique"],
+      required: [true, "veuillez entrer le nom de la compétence"],
       maxlength: [50, "le nom ne peut pas dépasser 50 caractères"],
-    },
-    statisticType: {
-      type: String,
-      required: [true, "veuillez entrer le type de la statistique"],
-      enum: ["compteur", "timer"],
-    },
-    unit: {
-      type: String,
-      required: [true, "veuillez spécifier le type de la statistique"],
     },
     description: {
       type: String,
@@ -40,4 +31,4 @@ const statisticSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-module.exports = mongoose.model("Statistic", statisticSchema);
+module.exports = mongoose.model("skill", skillsSchema);

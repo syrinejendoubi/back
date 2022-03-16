@@ -6,7 +6,7 @@ exports.CreateStatistic = async (req, res, next) => {
   const { statisticName } = req.body;
   if (Object.keys(statisticData).length === 0) {
     return res.status(400).send({
-      message: "Les champs de contenu des statistiques ne peut pas être vide",
+      message: "Les champs ne peut pas être vide",
     });
   }
   const existingStatistic = await Statistic.findOne({ statisticName });
@@ -17,13 +17,13 @@ exports.CreateStatistic = async (req, res, next) => {
   statistic
     .save()
     .then((data) => {
-      res.send(data);
+      res.json({ data, message: "statistique créée avec succès" });
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message ||
-          "Un problème est survenu lors de la création de l'invitation.",
+          "Enter tous les champs de statistique" ||
+          "Un problème est survenu lors de la création de statistique.",
       });
     });
 };
@@ -31,15 +31,17 @@ exports.CreateStatistic = async (req, res, next) => {
 // Retrieve all invitations from the database.
 exports.findAllStatistic = async (req, res) => {
   try {
-    const PAGE_SIZE = 3;
+    const PAGE_SIZE = 20;
     const page = parseInt(req.query.page) || "0";
     const total = await Statistic.countDocuments({});
     const statistic = await Statistic.find({})
+      .sort("-createdAt")
       .limit(PAGE_SIZE)
       .skip(PAGE_SIZE * page);
     res.json({
       totalpages: Math.ceil(total / PAGE_SIZE),
       statistic,
+      pageSize: PAGE_SIZE,
     });
     // const limit = req.query.limit * 1 || 100;
   } catch (err) {
@@ -95,7 +97,10 @@ exports.updateStatistic = (req, res) => {
           message: "Statistique non trouvée avec id " + req.params.statisticId,
         });
       }
-      res.send(stat);
+      res.json({
+        stat,
+        message: "La statistique a été modifiée avec succès",
+      });
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
@@ -105,8 +110,7 @@ exports.updateStatistic = (req, res) => {
       }
       return res.status(500).send({
         message:
-          "Un problème est survenu lors de la mise à jour de la statistique avec l'id" +
-          req.params.statisticId,
+          "Un problème est survenu lors de la mise à jour de la statistique ",
       });
     });
 };
@@ -120,7 +124,10 @@ exports.deleteStatistic = (req, res) => {
           message: "Statistique non trouvée avec id " + req.params.statisticId,
         });
       }
-      res.send({ message: "Statistique supprimé avec succès !" });
+      res.json({
+        statistique: stat,
+        message: "Statistique supprimé avec succès !",
+      });
     })
     .catch((err) => {
       if (err.kind === "ObjectId" || err.name === "NotFound") {
