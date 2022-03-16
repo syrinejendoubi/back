@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { findAllDiscipline , createDiscipline , findDiscipline,  deleteDiscipline , updateDiscipline , } = require("../../controllers/disciplinesController");
 const { protect, authorize } = require("../../middleware/authMiddleware");
 // Get All disciplines
-router.get("/disciplines" ,protect, findAllDiscipline);
+router.get("/disciplines" , findAllDiscipline);
 // Add discipline
 router.post("/disciplines", createDiscipline);
 // get discipline by id 

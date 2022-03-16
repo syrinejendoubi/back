@@ -58,7 +58,12 @@ components:
           type: string
         etat:
           type: string
+        expired:
+          type: boolean
+          default: false 
         userData:
+          $ref: "#/components/schemas/User"
+        acceptedBy:
           $ref: "#/components/schemas/User"
     UserLogin:
       type: object
@@ -66,6 +71,27 @@ components:
         email:
           type: string
         password:
+          type: string
+    Programme:
+      type: object
+      properties:
+        title:
+          type: string
+        description :
+          type: string
+        image : 
+          type: string
+        videoLink : 
+          type: string
+        skills :
+          type: array
+          items:
+            type: string 
+        statistics : 
+          type: array
+          items:
+            type: string 
+        creacteBy:
           type: string
 
 security:
@@ -77,6 +103,8 @@ tags:
     description: Operations about Discipline
   - name: invitation
     description: Operations about Invitation
+  - name: programme
+    description: Operations about programme
 
 paths:
   /users:
@@ -337,6 +365,85 @@ paths:
       tags:
         - invitation
       summary: Delete a invitation by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /programmes:
+    get:
+      tags:
+        - programme
+      summary: Get All Programmes
+      produces:
+        - application/json
+      parameters:
+        - name: creacteBy
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+    post:
+      tags:
+        - programme
+      summary: Add a new Programme
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Programme" # Reference to an object
+      responses:
+        "200":
+          description: OK
+
+  /programmes/{Id}:
+    get:
+      tags:
+        - programme
+      summary: Returns a programme by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+        - programme
+      summary: Update a programme by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Programme"
+      responses:
+        "200":
+          description: OK
+    delete:
+      tags:
+        - programme
+      summary: Delete a programme by ID.
       parameters:
         - name: Id
           in: path

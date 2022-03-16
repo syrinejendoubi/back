@@ -1,0 +1,26 @@
+const mongoose = require("mongoose");
+
+const trainingGroundSchema = new mongoose.Schema(
+  {
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "Veuillez indiquer le propriétaire de ce lieu"],
+    },
+    city: {
+      type: String,
+      required: [true, "Veuillez sélectionner le gouvernorat"],
+    },
+    address: {
+      type: String,
+      required: [true, "Veuillez entrer l'emplacement d'entrainement "],
+    },
+    coordinates: {
+      type: [Number],
+      required: [true, "veuillez ajouter les coordonnées du lieu"],
+      index: "2dsphere",
+    },
+  },
+  { timestamps: true }
+);
+module.exports = mongoose.model("TrainingGround", trainingGroundSchema);
