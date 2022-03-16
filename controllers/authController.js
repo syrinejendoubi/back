@@ -21,7 +21,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 };
 
 exports.register = async (req, res, next) => {
-  const { firstName, lastName, email, password, sexe, city, dateOfBirth , role } =
+  const { firstName, lastName, email, password, sexe, city, dateOfBirth } =
     req.body;
   if (
     !firstName ||
@@ -53,7 +53,6 @@ exports.register = async (req, res, next) => {
     sexe,
     city,
     dateOfBirth,
-    role
   });
   sendTokenResponse(user, 200, res);
 };
