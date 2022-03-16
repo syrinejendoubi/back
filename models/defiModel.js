@@ -1,27 +1,21 @@
 const mongoose = require("mongoose");
 
 const defiSchema = new mongoose.Schema(
+    {
     defiName: {
         type: String,
-        required: [true, "veuillez entrer le nom du défi"],
-        maxlength: [80, "le nom ne peut pas dépasser 80 caractères"],
+        required: [true, "veuillez entrer le nom du défi"]
     },
     defiObjectif: {
-        type: String,
-        required: false,
+        type: String
     },
     defiLien: {
-        type: String,
-        required: false,
+        type: String
     },
     defiVisible: {
         type: Boolean,
         default: false,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-      },
     creacteBy : {
         type: mongoose.Schema.Types.ObjectId,
         ref : "User",
@@ -29,6 +23,10 @@ const defiSchema = new mongoose.Schema(
     expired : {
         type: Boolean,
         default : false
-    } 
-)
+    }
+    
+    },{   timestamps: true 
+    }
+
+);
 module.exports = mongoose.model("Defi", defiSchema);

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { findAllDefi , createDefi , findDefi,  deleteDefi , updateDefi , } = require("../../controllers/defisController");
+const { findAllDefi , createDefi , findDefi,  deleteDefi , updateDefi , } = require("../../controllers/defiController");
 const { protect, authorize } = require("../../middleware/authMiddleware");
 // Get All defis
 router.get("/defis" , findAllDefi);
