@@ -10,7 +10,7 @@ const {
 
 router.post("/createStatistic", CreateStatistic);
 
-router.get("/all/statistics", findAllStatistic);
+router.get("/all/statistics/:discipline", findAllStatistic);
 
 // get statistic by id
 router.get("/statistic/:statisticId", findSingleStatistic);

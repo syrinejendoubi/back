@@ -37,6 +37,10 @@ const statisticSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    discipline:{
+      type: mongoose.Schema.Types.ObjectId,
+      required:true
+    }
   },
   { timestamps: true }
 );

@@ -34,7 +34,7 @@ exports.findAllSkills = async (req, res) => {
     const PAGE_SIZE = 20;
     const page = parseInt(req.query.page) || "0";
     const total = await Skill.countDocuments({});
-    const skill = await Skill.find({})
+    const skill = await Skill.find({ discipline: req.params.discipline })
       .sort("-createdAt")
       .limit(PAGE_SIZE)
       .skip(PAGE_SIZE * page);
