@@ -32,9 +32,12 @@ exports.CreateStatistic = async (req, res, next) => {
 exports.findAllStatistic = async (req, res) => {
   try {
     const PAGE_SIZE = 20;
+    console.log(req.params.discipline);
     const page = parseInt(req.query.page) || "0";
     const total = await Statistic.countDocuments({});
-    const statistic = await Statistic.find({})
+    const statistic = await Statistic.find({
+      discipline: req.params.discipline,
+    })
       .sort("-createdAt")
       .limit(PAGE_SIZE)
       .skip(PAGE_SIZE * page);

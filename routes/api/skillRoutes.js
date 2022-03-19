@@ -10,7 +10,7 @@ const {
 
 router.post("/createSkill", CreateSkill);
 
-router.get("/all/skills", findAllSkills);
+router.get("/all/skills/:discipline", findAllSkills);
 
 // get skill by id
 router.get("/skill/:skillId", findSingleSkill);
