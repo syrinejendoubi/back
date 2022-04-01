@@ -39,7 +39,7 @@ exports.findAllUser = (req, res) => {
 
 // Find a single user with a userId
 exports.findUser = (req, res) => {
-    User.findById(req.params.userId).populate('discipline')
+    User.findById(req.params.userId).populate('discipline').populate('myPlayers')
     .then(user => {
         if(!user) {
             return res.status(404).send({
