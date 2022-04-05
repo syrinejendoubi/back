@@ -62,40 +62,14 @@ exports.findAllUser = (req, res) => {
 exports.findUser = (req, res) => {
   User.findById(req.params.userId)
     .populate("discipline")
-    .exec((err, user) => {
-      if (err) {
-        if (err.kind === "ObjectId") {
-          return res.status(404).send({
-            message: "User not found with id " + req.params.userId,
-          });
-        }
-        return res.status(500).send({
-          message:
-            "Something wrong retrieving user with id " + req.params.userId,
-        });
-      }
-      return res.send(user);
-    });
-};
-
-// Update a user
-exports.updateUser = (req, res) => {
-  // Validate Request
-  if (Object.keys(req.body).length === 0) {
-    return res.status(400).send({
-      message: "User content can not be empty",
-    });
-  }
-
-  // Find and update user with the request body
-  User.findByIdAndUpdate(req.params.userId, req.body, { new: true })
+    .populate("myPlayers")
     .then((user) => {
       if (!user) {
         return res.status(404).send({
           message: "User not found with id " + req.params.userId,
         });
       }
-      sendTokenResponse(user, 200, res);
+      res.send(user);
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
@@ -104,9 +78,48 @@ exports.updateUser = (req, res) => {
         });
       }
       return res.status(500).send({
-        message: "Something wrong updating note with id " + req.params.userId,
+        message: "Something wrong retrieving user with id " + req.params.userId,
       });
     });
+};
+// Update a user
+exports.updateUser = async (req, res) => {
+  // Validate Request
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).send({
+      message: "Le contenu des données de l'utilisateur ne peut pas être vide",
+    });
+  }
+
+  // Find and update user with the request body
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.userId,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (updatedUser) {
+    return res.status(200).json({
+      data: updatedUser,
+      type: "success",
+      message: "l'utilisateur a été mis à jour avec succès",
+    });
+  }
+  if (user.role == "coach") sendTokenResponse(user, 200, res);
+  return next(new ErrorResponse("Mise à jour a échoué", 500));
+  // .catch((err) => {
+  //   if (err.kind === "ObjectId") {
+  //     return res.status(404).send({
+  //       message: "User not found with id " + req.params.userId,
+  //     });
+  //   }
+  //   return res.status(500).send({
+  //     message: "Something wrong updating user with id " + req.params.userId,
+  //   });
+  // });
 };
 
 // Delete a note with the specified Id in the request

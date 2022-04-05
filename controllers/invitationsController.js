@@ -37,10 +37,7 @@ exports.createInvitation = async (req, res) => {
             subject: "Invitation Hicotech",
             message,
         });
-        res.status(200).json({
-            message:
-              "invitation envoyée avec succès ",
-          });
+        res.send(invitation);
     } catch (err) {
         return next(new ErrorResponse("Email n'a pas pu être envoyé", 500));
     }
@@ -51,7 +48,7 @@ exports.createInvitation = async (req, res) => {
 // Retrieve all invitations from the database.
 exports.findAllInvitation = (req, res) => {
     const data = req.query  ;
-    Invitation.find(data)
+    Invitation.find(data).populate('acceptedBy')
     .then(invitations => {
         res.send(invitations);
     }).catch(err => {
