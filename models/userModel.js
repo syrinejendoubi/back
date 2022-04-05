@@ -3,6 +3,7 @@ const isEmail = require("validator/lib/isEmail");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+var calcBmi = require("bmi-calc");
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -46,7 +47,11 @@ const userSchema = new mongoose.Schema({
   },
   weight: {
     type: Number,
-    required: false,
+    required: true,
+  },
+  height: {
+    type: Number,
+    required: true,
   },
   subscription: {
     type: String,
@@ -69,6 +74,27 @@ const userSchema = new mongoose.Schema({
   discipline: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Discipline",
+  },
+  myPlayers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  inviteNumber: {
+    type: Number,
+    default: 0,
+  },
+  IMC: {
+    type: Object,
+    default: function () {
+      if (this.weight && this.height)
+        return calcBmi(this.weight, this.height, false);
+    },
+  },
+  active: {
+    type: Boolean,
+    required: false,
   },
 });
 
