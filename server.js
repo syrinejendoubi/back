@@ -18,7 +18,7 @@ const discipline = require("./routes/api/disciplinesRoutes");
 const invitations = require("./routes/api/InvitationsRoutes");
 const statistique = require("./routes/api/statisticRoutes");
 const competence = require("./routes/api/skillRoutes");
-
+const defis = require("./routes/api/defiRoutes");
 const trainingGround = require("./routes/api/trainingGroundRoutes");
 const programme = require("./routes/api/programmeRoutes");
 const swaggerDocument = YAML.load("./swagger.yaml");
@@ -39,7 +39,8 @@ app.use(
   statistique,
   trainingGround,
   programme,
-  competence
+  competence,
+  defis
 );
 app.use(errorHandler);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));

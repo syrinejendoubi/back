@@ -60,14 +60,12 @@ exports.findAllUser = (req, res) => {
 
 // Find a single user with a userId
 exports.findUser = (req, res) => {
-  User.findById(req.params.userId)
-    .populate("discipline")
-    .exec((err, user) => {
-      if (err) {
-        if (err.kind === "ObjectId") {
-          return res.status(404).send({
-            message: "User not found with id " + req.params.userId,
-          });
+    User.findById(req.params.userId).populate('discipline').populate('myPlayers')
+    .then(user => {
+        if(!user) {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.userId
+            });            
         }
         return res.status(500).send({
           message:

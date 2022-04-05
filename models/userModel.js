@@ -70,6 +70,16 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Discipline",
   },
+  myPlayers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
+  inviteNumber : {
+    type: Number,
+    default : 0 
+  }
+
+
 });
 
 userSchema.pre("save", async function (next) {
