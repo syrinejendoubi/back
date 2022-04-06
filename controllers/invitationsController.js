@@ -22,8 +22,10 @@ exports.createInvitation = async (req, res) => {
             message: err.message || "Something wrong while creating the invitation."
         });
     });
+    
     const tmpl = jsrender.templates('./templates/invitation.html');
     const user = await User.findById( invitation.creacteBy);
+    
     const message = tmpl.render({ 
                         firstName : invitation.userData.firstName,
                         creacteBy : user ,
@@ -35,10 +37,7 @@ exports.createInvitation = async (req, res) => {
             subject: "Invitation Hicotech",
             message,
         });
-        res.status(200).json({
-            message:
-              "Invitation envoyée avec succès ",
-          });
+        res.send(invitation);
     } catch (err) {
         return next(new ErrorResponse("Email n'a pas pu être envoyé", 500));
     }
@@ -49,7 +48,7 @@ exports.createInvitation = async (req, res) => {
 // Retrieve all invitations from the database.
 exports.findAllInvitation = (req, res) => {
     const data = req.query  ;
-    Invitation.find(data)
+    Invitation.find(data).populate('acceptedBy')
     .then(invitations => {
         res.send(invitations);
     }).catch(err => {
@@ -61,7 +60,7 @@ exports.findAllInvitation = (req, res) => {
 
 // Find a single invitation with a invitationId
 exports.findInvitation = (req, res) => {
-    Invitation.findById(req.params.invitationId).populate('creacteBy')
+    Invitation.findById(req.params.invitationId).populate('creacteBy').populate('acceptedBy')
     .then(invitation => {
         if(!invitation) {
             return res.status(404).send({

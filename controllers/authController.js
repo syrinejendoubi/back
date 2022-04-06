@@ -16,12 +16,23 @@ const sendTokenResponse = (user, statusCode, res) => {
   if (process.env.NODE_ENV === "production") {
     options.secure = true;
   }
-  res.status(statusCode).cookie("token", token, options).json({ token });
+  user.password = undefined;
+  res.status(statusCode).json({ user, token });
 };
 
 exports.register = async (req, res, next) => {
-  const { firstName, lastName, email, password, sexe, city, dateOfBirth , role } =
-    req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    sexe,
+    city,
+    dateOfBirth,
+    height,
+    weight,
+    active,
+  } = req.body;
   if (
     !firstName ||
     !lastName ||
@@ -52,7 +63,9 @@ exports.register = async (req, res, next) => {
     sexe,
     city,
     dateOfBirth,
-    role
+    height,
+    weight,
+    active,
   });
   sendTokenResponse(user, 200, res);
 };

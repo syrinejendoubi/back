@@ -3,6 +3,7 @@ const isEmail = require("validator/lib/isEmail");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+var calcBmi = require("bmi-calc");
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -46,7 +47,11 @@ const userSchema = new mongoose.Schema({
   },
   weight: {
     type: Number,
-    required: false,
+    required: true,
+  },
+  height: {
+    type: Number,
+    required: true,
   },
   subscription: {
     type: String,
@@ -70,6 +75,27 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Discipline",
   },
+  myPlayers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  inviteNumber: {
+    type: Number,
+    default: 0,
+  },
+  IMC: {
+    type: Object,
+    default: function () {
+      if (this.weight && this.height)
+        return calcBmi(this.weight, this.height, false);
+    },
+  },
+  active: {
+    type: Boolean,
+    required: false,
+  },
 });
 
 userSchema.pre("save", async function (next) {
@@ -79,7 +105,14 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 userSchema.methods.getSignedJwtToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+  const payload = {
+    id: this._id,
+    firstName: this.firstName,
+    lastName: this.lastName,
+    role: this.role,
+    discipline: this.discipline,
+  };
+  return jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };

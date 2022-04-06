@@ -12,6 +12,10 @@ const invitationSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref : "User",
         },
+        acceptedBy : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref : "User",
+        },
         email: {
             type: String,
             trim: true,
