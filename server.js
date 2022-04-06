@@ -21,6 +21,7 @@ const competence = require("./routes/api/skillRoutes");
 const defis = require("./routes/api/defiRoutes");
 const trainingGround = require("./routes/api/trainingGroundRoutes");
 const programme = require("./routes/api/programmeRoutes");
+const abonnement = require("./routes/api/subscriptionRoutes");
 const swaggerDocument = YAML.load("./swagger.yaml");
 
 const app = express();
@@ -40,7 +41,8 @@ app.use(
   trainingGround,
   programme,
   competence,
-  defis
+  defis,
+  abonnement
 );
 app.use(errorHandler);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));

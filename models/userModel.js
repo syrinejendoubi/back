@@ -96,6 +96,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     required: false,
   },
+  sessionPrice: {
+    type: Number,
+    required: false,
+  },
 });
 
 userSchema.pre("save", async function (next) {

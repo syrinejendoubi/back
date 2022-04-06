@@ -32,6 +32,7 @@ exports.register = async (req, res, next) => {
     height,
     weight,
     active,
+    sessionPrice,
   } = req.body;
   if (
     !firstName ||
@@ -65,6 +66,7 @@ exports.register = async (req, res, next) => {
     dateOfBirth,
     height,
     weight,
+    sessionPrice,
     active,
   });
   sendTokenResponse(user, 200, res);

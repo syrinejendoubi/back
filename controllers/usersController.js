@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-
+const ErrorResponse = require("../utils/errorResponse");
 const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken();
 
@@ -143,4 +143,28 @@ exports.deleteUser = (req, res) => {
         message: "Could not delete user with id " + req.params.userId,
       });
     });
+};
+exports.changeSubscription = async (req, res, next) => {
+  const { subscription } = req.body;
+  if (!subscription) {
+    return next(
+      new ErrorResponse("Veuillez fournir tous les renseignements requis", 400)
+    );
+  }
+  const updatedSubscription = await User.findByIdAndUpdate(
+    req.params.userId,
+    { subscription: subscription },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  if (updatedSubscription) {
+    return res.status(200).json({
+      data: updatedSubscription,
+      type: "success",
+      message: "l'abonnement a été mis à jour avec succès",
+    });
+  }
+  return next(new ErrorResponse("Mise à jour a échoué", 500));
 };
