@@ -10,15 +10,14 @@ const eventSchema = new mongoose.Schema(
             type: String,
             required: [true,"veuillez entrer description"]
         },
-        image: {
-            type: String
-        },
+       
         dateExpiration: Date ,
         etat : {
             type : String ,
             enum : ["Pour Tous","Mes Joueurs"]
 
         } ,
+        userData : {},
        
         creacteBy : {
             type: mongoose.Schema.Types.ObjectId,
