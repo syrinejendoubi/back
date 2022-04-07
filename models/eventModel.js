@@ -18,7 +18,10 @@ const eventSchema = new mongoose.Schema(
 
         } ,
         userData : {},
-       
+        image: {
+            type: String
+        },
+        dateEvent: Date ,
         creacteBy : {
             type: mongoose.Schema.Types.ObjectId,
             ref : "User",
