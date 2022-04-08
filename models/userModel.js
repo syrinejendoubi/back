@@ -47,11 +47,9 @@ const userSchema = new mongoose.Schema({
   },
   weight: {
     type: Number,
-    required: true,
   },
   height: {
     type: Number,
-    required: true,
   },
   subscription: {
     type: String,
