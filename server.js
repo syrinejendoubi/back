@@ -19,8 +19,10 @@ const invitations = require("./routes/api/InvitationsRoutes");
 const statistique = require("./routes/api/statisticRoutes");
 const defis =  require("./routes/api/defiRoutes");
 const competence = require("./routes/api/skillRoutes");
+const defis = require("./routes/api/defiRoutes");
 const trainingGround = require("./routes/api/trainingGroundRoutes");
 const programme = require("./routes/api/programmeRoutes");
+const assignChallenge = require("./routes/api/assignChallengeRoutes");
 const swaggerDocument = YAML.load("./swagger.yaml");
 
 const app = express();
@@ -40,8 +42,9 @@ app.use(
   statistique,
   trainingGround,
   programme,
-  competence , 
-  defis
+  competence,
+  defis,
+  assignChallenge
 );
 
 app.use(errorHandler);
