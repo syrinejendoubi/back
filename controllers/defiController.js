@@ -39,19 +39,6 @@ exports.findAllDefi = (req, res) => {
       });
     });
 };
-// Retrieve all defis from the database.
-exports.findMyDefi = (req, res) => {
-  const data = req.params.userId;
-  Defi.find({ assignedTo: data })
-    .then((defis) => {
-      res.send(defis);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Something wrong while retrieving defis.",
-      });
-    });
-};
 
 // Find a single defi with a defiId
 exports.findDefi = (req, res) => {

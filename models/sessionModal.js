@@ -26,7 +26,7 @@ const sessionSchema = new mongoose.Schema(
         },
         value: {
           type: Number,
-          default: undefined,
+          default: null,
         },
       },
     ],
@@ -38,7 +38,7 @@ const sessionSchema = new mongoose.Schema(
         },
         value: {
           type: Number,
-          default: undefined,
+          default: null,
         },
       },
     ],
