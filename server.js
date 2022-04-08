@@ -17,6 +17,7 @@ const users = require("./routes/api/usersRoutes");
 const discipline = require("./routes/api/disciplinesRoutes");
 const invitations = require("./routes/api/InvitationsRoutes");
 const statistique = require("./routes/api/statisticRoutes");
+const defis =  require("./routes/api/defiRoutes");
 const competence = require("./routes/api/skillRoutes");
 const defis = require("./routes/api/defiRoutes");
 const trainingGround = require("./routes/api/trainingGroundRoutes");
@@ -31,6 +32,7 @@ ConnectDB();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+
 app.use(
   "/api",
   auth,
@@ -44,6 +46,7 @@ app.use(
   defis,
   assignChallenge
 );
+
 app.use(errorHandler);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.all("*", (req, res) => {
