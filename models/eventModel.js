@@ -11,13 +11,12 @@ const eventSchema = new mongoose.Schema(
             required: [true,"veuillez entrer description"]
         },
        
-        dateExpiration: Date ,
         etat : {
             type : String ,
             enum : ["Pour Tous","Mes Joueurs"]
 
         } ,
-        userData : {},
+        participants :  [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] ,
         image: {
             type: String
         },
@@ -25,7 +24,11 @@ const eventSchema = new mongoose.Schema(
         creacteBy : {
             type: mongoose.Schema.Types.ObjectId,
             ref : "User",
-        }
+        },
+        eventVisible: {
+            type: Boolean,
+            default: true,
+        },
     },
     {   
         timestamps: true 
