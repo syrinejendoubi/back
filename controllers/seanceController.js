@@ -27,7 +27,7 @@ exports.createSeance = (req, res) => {
 // Retrieve all seances from the database.
 exports.findAllSeance = (req, res) => {
     const data = req.query  ;
-    Seance.find(data).populate('statistics')
+    Seance.find(data).populate('statistics.statistic')
     .then(seances => {
         res.send(seances);
     }).catch(err => {
