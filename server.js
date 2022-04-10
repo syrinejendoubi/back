@@ -17,8 +17,8 @@ const users = require("./routes/api/usersRoutes");
 const discipline = require("./routes/api/disciplinesRoutes");
 const invitations = require("./routes/api/InvitationsRoutes");
 const statistique = require("./routes/api/statisticRoutes");
-const defis =  require("./routes/api/defiRoutes");
-const events =  require("./routes/api/eventRoutes");
+const defis = require("./routes/api/defiRoutes");
+const events = require("./routes/api/eventRoutes");
 const competence = require("./routes/api/skillRoutes");
 const trainingGround = require("./routes/api/trainingGroundRoutes");
 const programme = require("./routes/api/programmeRoutes");
@@ -43,7 +43,7 @@ app.use(
   statistique,
   trainingGround,
   programme,
-  competence , 
+  competence,
   defis,
   events,
   assignChallenge,
