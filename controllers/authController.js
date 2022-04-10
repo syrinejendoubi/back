@@ -32,7 +32,7 @@ exports.register = async (req, res, next) => {
     height,
     weight,
     active,
-    role
+    role,
     sessionPrice,
   } = req.body;
   if (
@@ -70,7 +70,7 @@ exports.register = async (req, res, next) => {
     weight,
     sessionPrice,
     active,
-    role
+    role,
   });
   sendTokenResponse(user, 200, res);
 };
