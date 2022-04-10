@@ -47,6 +47,81 @@ components:
           type: string
         icon:
           type: string
+    Objective:
+      type: object
+      properties:
+        player:
+          type: string
+        statistics:
+          type: array
+        skills:
+          type: array
+        creactedBy:
+          type: string 
+    Seance:
+      type: object
+      properties:
+        seanceName:
+          type: string
+        dateSeance:
+          type: string
+        creactedBy:
+          $ref: "#/components/schemas/User"
+        player:
+          $ref: "#/components/schemas/User"
+        programme: 
+          $ref: "#/components/schemas/Programme"
+        statistics : 
+          type: array
+          items:
+            type: string
+        skills : 
+          type: array
+          items:
+            type: string
+        trainingGround:
+          type: string
+    Defi:
+      type: object
+      properties:
+        defiName:
+          type: string
+        defiObjectif:
+          type: string
+        defiLien:
+          type: string
+        defiVisible:
+          type: boolean
+        creacteBy:
+          type: string
+        dateExpiration:
+          type: string
+    Skill:
+      type: object
+      properties:
+        skillName:
+          type: string
+        description:
+          type: string
+        lien:
+          type: string
+        max: 
+          type: boolean
+        nbreFois:
+          type: integer
+        alerted: 
+          type: boolean
+    TrainingGround:
+      type: object
+      properties:
+        createdBy:
+          $ref: "#/components/schemas/User"
+        city:
+          type: string
+        address: 
+          type : string
+        coordinates:
+          type : integer
     Invitation:
       type: object
       properties:
@@ -72,6 +147,49 @@ components:
           type: string
         password:
           type: string
+    Statistic:
+      type: object
+      properties:
+        statisticName:
+          type: string
+        statisticType:
+          type: string
+        unit: 
+          type: string
+        description:
+          type: string
+        lien:
+          type: string
+        max: 
+          type: boolean
+        nbreFois:
+          type: integer
+        alerted: 
+          type: boolean
+        discipline:
+          type: string
+         
+    Event:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        etat: 
+          type: string
+        image:
+          type: string
+        dateEvent:
+          type: string
+        eventVisible:
+          type: boolean
+        creacteBy:
+          type: string
+        participants : 
+          type: array
+          items:
+            type: string
     Programme:
       type: object
       properties:
@@ -105,6 +223,22 @@ tags:
     description: Operations about Invitation
   - name: programme
     description: Operations about programme
+  - name: event
+    description: Operations about event
+  - name: seance
+    description: Operations about seance
+  - name: defi
+    description: Operations about defi
+  - name: skill
+    description: Operations about skill
+  - name: statistic
+    description: Operations about statistic
+  - name: trainingGround
+    description: Operations about trainingGround
+  - name: objective
+    description: Operations about objectives
+  
+
 
 paths:
   /users:
@@ -453,3 +587,567 @@ paths:
       responses:
         "200":
           description: OK
+  
+  /events:
+    get:
+      tags:
+        - event
+      summary: Get All Disciplines
+      produces:
+        - application/json
+      parameters:
+        - name: label
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+    post:
+      tags:
+        - event
+      summary: Add a new Discipline
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Event" # Reference to an object
+      responses:
+        "200":
+          description: OK
+  /events/{Id}:
+    get:
+      tags:
+        - event
+      summary: Returns a event by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+        - event
+      summary: Update a event by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Event"
+      responses:
+        "200":
+          description: OK
+    delete:
+      tags:
+        - event
+      summary: Delete a event by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  
+  /seances:
+    get:
+      tags:
+        - seance
+      summary: Get All seances
+      produces:
+        - application/json
+      parameters:
+        - name: label
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+    post:
+      tags:
+        - seance
+      summary: Add a new Discipline
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Seance" # Reference to an object
+      responses:
+        "200":
+          description: OK
+  
+  /seances/{Id}:
+    get:
+      tags:
+        - seance
+      summary: Returns a event by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+        - seance
+      summary: Update a event by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Seance"
+      responses:
+        "200":
+          description: OK
+    delete:
+      tags:
+        - seance
+      summary: Delete a event by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+
+  /seances/annuler/{ID}:
+    put:
+      tags:
+        - seance
+      summary: Annuler a seances by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Seance"
+      responses:
+        "200":
+          description: OK
+  
+  /defis:
+    get:
+      tags:
+        - defi
+      summary: Get All defis
+      produces:
+        - application/json
+      parameters:
+        - name: label
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+    post:
+      tags:
+        - defi
+      summary: Add a new defis
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Defi" # Reference to an object
+      responses:
+        "200":
+          description: OK
+  
+  /defis/{Id}:
+    get:
+      tags:
+        - defi
+      summary: Returns a defis by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+        - defi
+      summary: Update a defis by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Defi"
+      responses:
+        "200":
+          description: OK
+    delete:
+      tags:
+        - defi
+      summary: Delete a defi by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  
+  /all/skills/{discipline}:
+    get:
+      tags:
+        - skill
+      summary: Get All skills by discipline
+      produces:
+        - application/json
+      parameters:
+        - name: discipline
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+  /createSkill:
+    post:
+      tags:
+        - skill
+      summary: Add a new skill
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Skill" # Reference to an object
+      responses:
+        "200":
+          description: OK
+  
+  /skill/{Id}:
+    get:
+      tags:
+        - skill
+      summary: Returns a skill by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+        - skill
+      summary: Update a skill by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Skill"
+      responses:
+        "200":
+          description: OK
+    delete:
+      tags:
+        - skill
+      summary: Delete a skill by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  
+  /all/statistics/{discipline}:
+    get:
+      tags:
+        - statistic
+      summary: Get All statistics by discipline
+      produces:
+        - application/json
+      parameters:
+        - name: discipline
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+  /createStatistic:
+    post:
+      tags:
+        - statistic
+      summary: Add a new statistic
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Statistic" # Reference to an object
+      responses:
+        "200":
+          description: OK
+  
+  /statistic/{Id}:
+    get:
+      tags:
+        - statistic
+      summary: Returns a statistic by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+        - statistic
+      summary: Update a statistic by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Statistic"
+      responses:
+        "200":
+          description: OK
+    delete:
+      tags:
+        - statistic
+      summary: Delete a statistic by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  
+  /createTrainingGround:
+    post:
+      tags:
+        - trainingGround
+      summary: Add a new trainingGround
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/TrainingGround" # Reference to an object
+      responses:
+        "200":
+          description: OK
+  
+  /getTrainingGrounds/{Id}:
+    get:
+      tags:
+        - trainingGround
+      summary: Returns a TrainingGround by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /updateTrainingGround/{Id}:
+    put:
+      tags:
+        - trainingGround
+      summary: Update a trainingGround by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/TrainingGround"
+      responses:
+        "200":
+          description: OK
+  /deleteTrainingGround/{Id}:
+    delete:
+      tags:
+        - trainingGround
+      summary: Delete a trainingGround by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+
+  /objectives:
+    get:
+      tags:
+        - objective
+      summary: Get All objectives
+      produces:
+        - application/json
+      parameters:
+        - name: label
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+    post:
+      tags:
+        - objective
+      summary: Add a new Discipline
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Objective" # Reference to an object
+      responses:
+        "200":
+          description: OK
+  
+  /objectives/{Id}:
+    get:
+      tags:
+        - objective
+      summary: Returns a objective by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+        - objective
+      summary: Update a objective by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json: # Media type
+            schema: # Request body contents
+              $ref: "#/components/schemas/Objective"
+      responses:
+        "200":
+          description: OK
+    delete:
+      tags:
+        - objective
+      summary: Delete a skill by ID.
+      parameters:
+        - name: Id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  
