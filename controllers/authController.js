@@ -32,6 +32,7 @@ exports.register = async (req, res, next) => {
     height,
     weight,
     active,
+    role
   } = req.body;
   if (
     !firstName ||
@@ -40,7 +41,8 @@ exports.register = async (req, res, next) => {
     !password ||
     !sexe ||
     !city ||
-    !dateOfBirth
+    !dateOfBirth ||
+    !role
   ) {
     return next(
       new ErrorResponse("Veuillez fournir tous les renseignements requis", 400)
@@ -66,6 +68,7 @@ exports.register = async (req, res, next) => {
     height,
     weight,
     active,
+    role
   });
   sendTokenResponse(user, 200, res);
 };
