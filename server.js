@@ -46,9 +46,9 @@ app.use(
   programme,
   competence,
   defis,
-  seance
+  seance,
   events,
-  abonnement
+  abonnement,
   assignChallenge
 );
 
