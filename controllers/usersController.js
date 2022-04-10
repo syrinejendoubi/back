@@ -135,16 +135,23 @@ exports.deleteUser = (req, res) => {
       });
     });
 };
-exports.changeSubscription = async (req, res, next) => {
+exports.updateSubscription = async (req, res, next) => {
   const { subscription } = req.body;
   if (!subscription) {
     return next(
       new ErrorResponse("Veuillez fournir tous les renseignements requis", 400)
     );
   }
+  let FieldToUpdate = {};
+  if (subscription === "Free")
+    FieldToUpdate = { subscription: "Free", inviteNumber: 3 };
+  else if (subscription === "Basic")
+    FieldToUpdate = { subscription: "Basic", inviteNumber: 10 };
+  else if (subscription === "Premium")
+    FieldToUpdate = { subscription: "Premium", inviteNumber: 10000000 };
   const updatedSubscription = await User.findByIdAndUpdate(
     req.params.userId,
-    { subscription: subscription },
+    FieldToUpdate,
     {
       new: true,
       runValidators: true,
@@ -157,5 +164,5 @@ exports.changeSubscription = async (req, res, next) => {
       message: "l'abonnement a été mis à jour avec succès",
     });
   }
-  return next(new ErrorResponse("Mise à jour a échoué", 500));
+  return next(new ErrorResponse("La mise à jour a échoué", 500));
 };
