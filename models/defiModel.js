@@ -14,16 +14,13 @@ const defiSchema = new mongoose.Schema(
     },
     defiVisible: {
         type: Boolean,
-        default: false,
+        default: true,
     },
     creacteBy : {
         type: mongoose.Schema.Types.ObjectId,
         ref : "User",
     },
-    expired : {
-        type: Boolean,
-        default : false
-    },
+  
     dateExpiration: Date ,
     },
     {   timestamps: true 
