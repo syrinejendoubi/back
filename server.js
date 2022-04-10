@@ -52,6 +52,7 @@ app.use(
   abonnement,
   assignChallenge,
   objective
+
 );
 
 app.use(errorHandler);
