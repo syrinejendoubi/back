@@ -3,17 +3,17 @@ const mongoose = require("mongoose");
 const seanceSchema = new mongoose.Schema(
   {
     seanceName: {
-        type: String,
-        required: [true, "veuillez entrer le nom du seance "]
+      type: String,
+      required: [true, "veuillez entrer le nom du seance "],
     },
     dateSeance: {
       type: Date,
       required: [true, "veuillez entrer date "],
     },
     createdAt: {
-        type: Date,
-        default: Date.now,
-      },
+      type: Date,
+      default: Date.now,
+    },
     creactedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -57,6 +57,10 @@ const seanceSchema = new mongoose.Schema(
     feedback: {
       goalAcheived: Boolean,
       description: String,
+    },
+    sessionCancelled: {
+      isCancelled: { type: Boolean, default: false },
+      reason: String,
     },
   },
   { timestamps: true }
