@@ -33,6 +33,7 @@ exports.register = async (req, res, next) => {
     weight,
     active,
     role
+    sessionPrice,
   } = req.body;
   if (
     !firstName ||
@@ -67,6 +68,7 @@ exports.register = async (req, res, next) => {
     dateOfBirth,
     height,
     weight,
+    sessionPrice,
     active,
     role
   });

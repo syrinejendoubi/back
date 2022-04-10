@@ -24,6 +24,7 @@ const trainingGround = require("./routes/api/trainingGroundRoutes");
 const programme = require("./routes/api/programmeRoutes");
 const seance = require("./routes/api/seanceRoutes");
 const assignChallenge = require("./routes/api/assignChallengeRoutes");
+const abonnement = require("./routes/api/subscriptionRoutes");
 const swaggerDocument = YAML.load("./swagger.yaml");
 
 const app = express();
@@ -45,9 +46,10 @@ app.use(
   programme,
   competence,
   defis,
-  events,
-  assignChallenge,
   seance
+  events,
+  abonnement
+  assignChallenge
 );
 
 app.use(errorHandler);
