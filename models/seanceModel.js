@@ -34,7 +34,7 @@ const seanceSchema = new mongoose.Schema(
         },
         value: {
           type: Number,
-          default: undefined,
+          default: null,
         },
       },
     ],
@@ -46,7 +46,7 @@ const seanceSchema = new mongoose.Schema(
         },
         value: {
           type: Number,
-          default: undefined,
+          default: null,
         },
       },
     ],
