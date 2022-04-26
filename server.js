@@ -27,7 +27,6 @@ const assignChallenge = require("./routes/api/assignChallengeRoutes");
 const abonnement = require("./routes/api/subscriptionRoutes");
 const objective = require("./routes/api/objectiveRoutes");
 const swaggerDocument = YAML.load("./swagger.yaml");
-
 const app = express();
 
 ConnectDB();
@@ -52,7 +51,6 @@ app.use(
   abonnement,
   assignChallenge,
   objective
-
 );
 
 app.use(errorHandler);
