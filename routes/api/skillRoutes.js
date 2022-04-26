@@ -5,7 +5,7 @@ const {
   deleteSkill,
   updateSkill,
   findSingleSkill,
-  findAllSkills,
+  findAllSkills
 } = require("../../controllers/skillController");
 
 router.post("/createSkill", CreateSkill);
