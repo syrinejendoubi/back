@@ -1,4 +1,5 @@
 const Event = require("../models/eventModel");
+const User = require("../models/userModel");
 
 //Create new Event
 exports.createEvent = (req, res) => {
@@ -109,4 +110,29 @@ exports.deleteEvent = (req, res) => {
             message: "Could not delete event with id " + req.params.eventId
         });
     });
+};
+
+exports.findEventCratedByMycoachs = async (req, res) => {
+    
+    const user = await User.findById(req.params.userId);
+    
+    Event
+    .find({$or:[{
+        etat : "Pour Tous",
+        eventVisible : true 
+    },
+    {
+        etat : "Mes Joueurs",
+        eventVisible : true,
+        creacteBy: user.mycoaches  
+    }]
+    })
+    .then(events => {
+        res.send(events);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Something wrong while retrieving events."
+        });
+    });
+
 };
