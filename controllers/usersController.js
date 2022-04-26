@@ -47,7 +47,7 @@ exports.createUser = (req, res) => {
 exports.findAllUser = (req, res) => {
   const data = req.query;
   User.find(data)
-    .populate("discipline")
+    .populate("discipline").populate('mycoaches')
     .then((users) => {
       res.send(users);
     })
@@ -63,6 +63,7 @@ exports.findUser = (req, res) => {
   User.findById(req.params.userId)
     .populate("discipline")
     .populate("myPlayers")
+    .populate('mycoaches')
     .then((user) => {
       if (!user) {
         return res.status(404).send({
