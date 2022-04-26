@@ -47,11 +47,9 @@ const userSchema = new mongoose.Schema({
   },
   weight: {
     type: Number,
-    required: true,
   },
   height: {
     type: Number,
-    required: true,
   },
   subscription: {
     type: String,
@@ -94,6 +92,10 @@ const userSchema = new mongoose.Schema({
   },
   active: {
     type: Boolean,
+    required: false,
+  },
+  sessionPrice: {
+    type: Number,
     required: false,
   },
 });

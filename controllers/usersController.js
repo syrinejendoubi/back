@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-
+const ErrorResponse = require("../utils/errorResponse");
 const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken();
 
@@ -83,43 +83,34 @@ exports.findUser = (req, res) => {
     });
 };
 // Update a user
-exports.updateUser = async (req, res) => {
+exports.updateUser = (req, res) => {
   // Validate Request
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
-      message: "Le contenu des données de l'utilisateur ne peut pas être vide",
+      message: "User content can not be empty",
     });
   }
 
   // Find and update user with the request body
-  const updatedUser = await User.findByIdAndUpdate(
-    req.params.userId,
-    req.body,
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
-
-  if (updatedUser) {
-    return res.status(200).json({
-      data: updatedUser,
-      type: "success",
-      message: "l'utilisateur a été mis à jour avec succès",
+  User.findByIdAndUpdate(req.params.userId, req.body, { new: true })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({
+          message: "User not found with id " + req.params.userId,
+        });
+      }
+      sendTokenResponse(user, 200, res);
+    })
+    .catch((err) => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          message: "User not found with id " + req.params.userId,
+        });
+      }
+      return res.status(500).send({
+        message: "Something wrong updating note with id " + req.params.userId,
+      });
     });
-  }
-  if (user.role == "coach") sendTokenResponse(user, 200, res);
-  return next(new ErrorResponse("Mise à jour a échoué", 500));
-  // .catch((err) => {
-  //   if (err.kind === "ObjectId") {
-  //     return res.status(404).send({
-  //       message: "User not found with id " + req.params.userId,
-  //     });
-  //   }
-  //   return res.status(500).send({
-  //     message: "Something wrong updating user with id " + req.params.userId,
-  //   });
-  // });
 };
 
 // Delete a note with the specified Id in the request
@@ -143,4 +134,35 @@ exports.deleteUser = (req, res) => {
         message: "Could not delete user with id " + req.params.userId,
       });
     });
+};
+exports.updateSubscription = async (req, res, next) => {
+  const { subscription } = req.body;
+  if (!subscription) {
+    return next(
+      new ErrorResponse("Veuillez fournir tous les renseignements requis", 400)
+    );
+  }
+  let FieldToUpdate = {};
+  if (subscription === "Free")
+    FieldToUpdate = { subscription: "Free", inviteNumber: 3 };
+  else if (subscription === "Basic")
+    FieldToUpdate = { subscription: "Basic", inviteNumber: 10 };
+  else if (subscription === "Premium")
+    FieldToUpdate = { subscription: "Premium", inviteNumber: 10000000 };
+  const updatedSubscription = await User.findByIdAndUpdate(
+    req.params.userId,
+    FieldToUpdate,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  if (updatedSubscription) {
+    return res.status(200).json({
+      data: updatedSubscription,
+      type: "success",
+      message: "l'abonnement a été mis à jour avec succès",
+    });
+  }
+  return next(new ErrorResponse("La mise à jour a échoué", 500));
 };
