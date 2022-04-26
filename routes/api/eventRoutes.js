@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { findAllEvent , createEvent , findEvent,  deleteEvent , updateEvent , } = require("../../controllers/eventController");
+const { findAllEvent , createEvent , findEvent,  deleteEvent , updateEvent ,findEventCratedByMycoachs } = require("../../controllers/eventController");
 const { protect, authorize } = require("../../middleware/authMiddleware");
 // Get All events
 router.get("/events" , findAllEvent);
@@ -11,6 +11,8 @@ router.get("/events/:eventId" , findEvent );
 router.put("/events/:eventId" ,updateEvent );
 // delete event
 router.delete("/events/:eventId" ,deleteEvent );
+
+router.get("/joueur/:userId/events",findEventCratedByMycoachs);
 
 
 module.exports = router;
