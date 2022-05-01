@@ -62,6 +62,10 @@ const seanceSchema = new mongoose.Schema(
       isCancelled: { type: Boolean, default: false },
       reason: String,
     },
+    sessionStatus: {
+      type: String,
+      enum: ["Planifié", "Terminé"],
+    }
   },
   { timestamps: true }
 );
