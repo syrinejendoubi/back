@@ -16,7 +16,7 @@ const programmeSchema = new mongoose.Schema(
         videoLink: {
             type: String
         },
-        skills :  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Statistic' }] ,
+        skills :  [{ type: mongoose.Schema.Types.ObjectId, ref: 'skill' }] ,
         statistics : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Statistic' }],
         creacteBy : {
             type: mongoose.Schema.Types.ObjectId,

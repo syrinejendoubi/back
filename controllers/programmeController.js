@@ -27,7 +27,7 @@ exports.createProgramme = (req, res) => {
 // Retrieve all programmes from the database.
 exports.findAllProgramme = (req, res) => {
     const data = req.query  ;
-    Programme.find(data).populate('statistics')
+    Programme.find(data).populate('statistics').populate('skills')
     .then(programmes => {
         res.send(programmes);
     }).catch(err => {
@@ -39,7 +39,7 @@ exports.findAllProgramme = (req, res) => {
 
 // Find a single programme with a programmeId
 exports.findProgramme = (req, res) => {
-    Programme.findById(req.params.programmeId).populate('statistics')
+    Programme.findById(req.params.programmeId).populate('statistics').populate('skills')
     .then(programme => {
         if(!programme) {
             return res.status(404).send({
