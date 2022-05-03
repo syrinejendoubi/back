@@ -56,4 +56,5 @@ const playerObjectiveSchema = new mongoose.Schema(
   }
 );
 
+playerObjectiveSchema.pre("save", function () {});
 module.exports = mongoose.model("playerObjective", playerObjectiveSchema);

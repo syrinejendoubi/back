@@ -12,7 +12,7 @@ const {
   addSkillObjectiveById,
   modifyStatsObjectiveByCoachAndPlayer,
   modifySkillObjectiveByCoachAndPlayer,
-} = require("../../controllers/PlayerObjectiveModal");
+} = require("../../controllers/PlayerObjectiveController");
 const { protect, authorize } = require("../../middleware/authMiddleware");
 // Get All objective
 router.get("/objectives", findAllObjective);
