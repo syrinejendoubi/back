@@ -1,5 +1,7 @@
 const Objective = require("../models/playerObjectiveModal");
-
+const Seance = require("../models/seanceModel");
+const schedule = require("node-schedule");
+const Alert = require("../models/AlertModal");
 //Create new Seance
 exports.createObjective = (req, res) => {
   // Request validation
@@ -337,7 +339,7 @@ exports.deleteSkillObjectiveByCoachAndPlayer = (req, res) => {
 };
 
 // add stat to an object by coachId and playerID
-exports.addStatObjectiveById = (req, res) => {
+exports.addStatObjectiveById = async (req, res) => {
   // Validate Request
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
@@ -346,30 +348,68 @@ exports.addStatObjectiveById = (req, res) => {
   }
 
   // Find and update seance with the request body
-  Objective.updateOne(
-    { _id: req.params.objectiveId },
-    { $push: { statistics: req.body } },
-    { new: true, runValidators: true }
-  )
-    .then((objective) => {
+  Objective.findOneAndUpdate(req.params.objectiveId, {
+    $push: { statistics: req.body },
+  })
+    .populate("statistics.statistic")
+    .exec(function (err, objective) {
+      if (err) {
+        return res.status(500).send({
+          message:
+            "Something wrong updating objective with id " +
+            req.params.objectiveId,
+        });
+      }
       if (!objective) {
         return res.status(404).send({
           message: "Objective not found with id " + req.params.objectiveId,
         });
       }
-      res.send(objective);
-    })
-    .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message: "Objective not found with id " + req.params.objectiveId,
-        });
-      }
-      return res.status(500).send({
-        message:
-          "Something wrong updating objective with id " +
-          req.params.objectiveId,
+
+      let date = new Date(req.body.beforeDate);
+      schedule.scheduleJob(date, function () {
+        const query = {
+          creactedBy: objective.creactedBy,
+          player: objective.player,
+          "statistics.statistic": req.body.statistic,
+          "statistics.value": {
+            [req.body.max ? "$gte" : "$lte"]: req.body.value,
+          },
+        };
+        Seance.find(query)
+          .then((seances) => {
+            let AlertData = {
+              player: objective.player,
+              statistique: req.body.statistic,
+              coach: objective.creactedBy,
+              isPositiveAlert: seances.length > 0 ? true : false,
+              maximiser: req.body.max,
+              date: req.body.beforeDate,
+              valeurObj: req.body.value,
+            };
+            const alert = new Alert(AlertData);
+            alert.save().catch((err) => {
+              return res.status(500).send({
+                message:
+                  err.message || "Something wrong while creating the alert.",
+              });
+            });
+          })
+          .catch((err) => {
+            if (err.kind === "ObjectId") {
+              return res.status(404).send({
+                message:
+                  "Objective not found with id " + req.params.objectiveId,
+              });
+            }
+            return res.status(500).send({
+              message:
+                "Something wrong updating objective with id " +
+                req.params.objectiveId,
+            });
+          });
       });
+      return res.status(200).json(objective);
     });
 };
 // add stat to an object by coachId and playerID
