@@ -41,7 +41,7 @@ describe("Discipline", () => {
       });
   });
 
-  test("should get all tasks", () => {
+  test("should get all disciplines", () => {
     request(app)
       .get("/api/disciplines")
       .expect(200)
@@ -80,4 +80,23 @@ describe("Discipline", () => {
         expect(res.body.icon).toBe(data.icon);
       });
   });
+
+  test("should delete discipline using its id",async()=>{
+    await request(app)
+      .delete("/api/disciplines/"+savedDiscipline._id)
+      .expect(200)
+      .then((res) => {
+        expect(res.body.message).toBe("Discipline deleted successfully!");
+      })
+  });
+
+  test("should return 404 when the id doesn't exist",async function(){
+    await request(app)
+      .get("/api/disciplines/"+savedDiscipline._id)
+      .expect(404)
+      .then((response)=>{
+        expect(response.body.message).toBe("Discipline not found with id "+savedDiscipline._id)
+      })
+    })
+
 });

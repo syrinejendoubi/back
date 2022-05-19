@@ -73,11 +73,6 @@ exports.findUser = (req, res) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message: "User not found with id " + req.params.userId,
-        });
-      }
       return res.status(500).send({
         message: "Something wrong retrieving user with id " + req.params.userId,
       });
@@ -103,11 +98,6 @@ exports.updateUser = (req, res) => {
       sendTokenResponse(user, 200, res);
     })
     .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message: "User not found with id " + req.params.userId,
-        });
-      }
       return res.status(500).send({
         message: "Something wrong updating note with id " + req.params.userId,
       });
@@ -126,11 +116,6 @@ exports.deleteUser = (req, res) => {
       res.send({ message: "User deleted successfully!" });
     })
     .catch((err) => {
-      if (err.kind === "ObjectId" || err.name === "NotFound") {
-        return res.status(404).send({
-          message: "User not found with id " + req.params.userId,
-        });
-      }
       return res.status(500).send({
         message: "Could not delete user with id " + req.params.userId,
       });
