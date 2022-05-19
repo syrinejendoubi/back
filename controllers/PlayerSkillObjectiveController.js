@@ -1,7 +1,7 @@
-const Objective = require("../models/StatisticObjectiveModal copy");
+const Objective = require("../models/SkillObjectiveModal");
 
 //Create new Seance
-exports.createStatisticObjective = (req, res) => {
+exports.createSkillObjective = (req, res) => {
   // Request validation
   const objectiveData = req.body;
   if (Object.keys(req.body).length === 0) {
@@ -29,12 +29,12 @@ exports.createStatisticObjective = (req, res) => {
 };
 
 // Retrieve all seances from the database.
-exports.findAllStatisticObjective = (req, res) => {
+exports.findAllSkillObjective = (req, res) => {
   const data = req.query;
   Objective.find(data)
     .populate({
-      path: "statistic",
-      model: "Statistic",
+      path: "skill",
+      model: "skill",
     })
     .populate({ path: "player", model: "User" })
     .populate({
@@ -55,11 +55,11 @@ exports.findAllStatisticObjective = (req, res) => {
 };
 
 // Find a single seance with a seanceId
-exports.findStatisticObjective = (req, res) => {
+exports.findSkillObjective = (req, res) => {
   Objective.findById(req.params.objectiveId)
     .populate({
-      path: "statistic",
-      model: "Statistic",
+      path: "skill",
+      model: "skill",
     })
     .populate({ path: "player", model: "User" })
     .populate({
@@ -87,7 +87,7 @@ exports.findStatisticObjective = (req, res) => {
     });
 };
 // Update a seance
-exports.updateStatisticObjective = (req, res) => {
+exports.updateSkillObjective = (req, res) => {
   // Validate Request
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
@@ -142,34 +142,33 @@ exports.deleteObjective = (req, res) => {
     });
 };
 // Modify an objective for a specified coach and player
-exports.modifyStatsObjective = (req, res) => {
+exports.modifySkillObjective = (req, res) => {
   // Validate Request
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
-      message: "statistic's session content can not be empty",
+      message: "skill's session content can not be empty",
       type: "error",
     });
   }
 
   // Find and update event with the request body
   Objective.findByIdAndUpdate(req.params.objectiveId, req.body, { new: true })
-    .then((stat) => {
-      if (!stat) {
+    .then((skill) => {
+      if (!skill) {
         return res.status(404).send({
           message: "skill not found with id " + req.params.objectiveId,
         });
       }
-      res.send(stat);
+      res.send(skill);
     })
     .catch((err) => {
       if (err.kind === "ObjectId") {
         return res.status(404).send({
-          message: "skill not found with id " + req.params.objectiveId,
+          message: "skill not found with id " + req.params.SkillId,
         });
       }
       return res.status(500).send({
-        message:
-          "Something wrong updating skill with id " + req.params.objectiveId,
+        message: "Something wrong updating skill with id " + req.params.SkillId,
       });
     });
 };
@@ -177,7 +176,7 @@ exports.modifyStatsObjective = (req, res) => {
 // exports.modifySkillObjectiveByCoachAndPlayer = (req, res) => {
 //   const { value, beforeDate, done } = req.body;
 //   Objective.findOneAndUpdate(
-//     req.params.objectiveId,
+//     req.params.SkillId,
 //     {
 //       $set: {
 //         "skills.$[elem].value": value,
@@ -185,13 +184,13 @@ exports.modifyStatsObjective = (req, res) => {
 //         "skills.$[elem].done": done,
 //       },
 //     },
-//     // $set: { statistics: { _id: req.params.objectiveId } },
+//     // $set: { statistics: { _id: req.params.SkillId } },
 //     { arrayFilters: [{ "elem._id": req.params.statId }] }
 //   )
 //     .then((ojective) => {
 //       if (!ojective) {
 //         return res.status(404).send({
-//           message: "objective not found with id " + req.params.objectiveId,
+//           message: "objective not found with id " + req.params.SkillId,
 //         });
 //       }
 //       res.send({
@@ -202,13 +201,13 @@ exports.modifyStatsObjective = (req, res) => {
 //     .catch((err) => {
 //       if (err.kind === "ObjectId" || err.name === "NotFound") {
 //         return res.status(404).send({
-//           message: "objective not found with id " + req.params.objectiveId,
+//           message: "objective not found with id " + req.params.SkillId,
 //         });
 //       }
 //       return res.status(500).send({
 //         message:
 //           "Impossible de modifier l'objective avec l'id " +
-//           req.params.objectiveId,
+//           req.params.SkillId,
 //       });
 //     });
 // };
@@ -218,14 +217,14 @@ exports.modifyStatsObjective = (req, res) => {
 //   Objective.findOneAndUpdate(
 //     data,
 //     {
-//       $pull: { skills: { _id: req.params.objectiveId } },
+//       $pull: { skills: { _id: req.params.SkillId } },
 //     },
 //     { new: true }
 //   )
 //     .then((ojective) => {
 //       if (!ojective) {
 //         return res.status(404).send({
-//           message: "objective not found with id " + req.params.objectiveId,
+//           message: "objective not found with id " + req.params.SkillId,
 //         });
 //       }
 //       res.send({
@@ -236,11 +235,11 @@ exports.modifyStatsObjective = (req, res) => {
 //     .catch((err) => {
 //       if (err.kind === "ObjectId" || err.name === "NotFound") {
 //         return res.status(404).send({
-//           message: "objective not found with id " + req.params.objectiveId,
+//           message: "objective not found with id " + req.params.SkillId,
 //         });
 //       }
 //       return res.status(500).send({
-//         message: "Could not delete ojective with id " + req.params.objectiveId,
+//         message: "Could not delete ojective with id " + req.params.SkillId,
 //       });
 //     });
 // };
@@ -256,14 +255,14 @@ exports.modifyStatsObjective = (req, res) => {
 
 //   // Find and update seance with the request body
 //   Objective.updateOne(
-//     { _id: req.params.objectiveId },
+//     { _id: req.params.SkillId },
 //     { $push: { statistics: req.body } },
 //     { new: true, runValidators: true }
 //   )
 //     .then((objective) => {
 //       if (!objective) {
 //         return res.status(404).send({
-//           message: "Objective not found with id " + req.params.objectiveId,
+//           message: "Objective not found with id " + req.params.SkillId,
 //         });
 //       }
 //       res.send(objective);
@@ -271,13 +270,13 @@ exports.modifyStatsObjective = (req, res) => {
 //     .catch((err) => {
 //       if (err.kind === "ObjectId") {
 //         return res.status(404).send({
-//           message: "Objective not found with id " + req.params.objectiveId,
+//           message: "Objective not found with id " + req.params.SkillId,
 //         });
 //       }
 //       return res.status(500).send({
 //         message:
 //           "Something wrong updating objective with id " +
-//           req.params.objectiveId,
+//           req.params.SkillId,
 //       });
 //     });
 // };
@@ -292,14 +291,14 @@ exports.modifyStatsObjective = (req, res) => {
 
 //   // Find and update seance with the request body
 //   Objective.updateOne(
-//     { _id: req.params.objectiveId },
+//     { _id: req.params.SkillId },
 //     { $push: { skills: req.body } },
 //     { new: true, runValidators: true }
 //   )
 //     .then((objective) => {
 //       if (!objective) {
 //         return res.status(404).send({
-//           message: "Objective not found with id " + req.params.objectiveId,
+//           message: "Objective not found with id " + req.params.SkillId,
 //         });
 //       }
 //       res.send(objective);
@@ -307,13 +306,13 @@ exports.modifyStatsObjective = (req, res) => {
 //     .catch((err) => {
 //       if (err.kind === "ObjectId") {
 //         return res.status(404).send({
-//           message: "Objective not found with id " + req.params.objectiveId,
+//           message: "Objective not found with id " + req.params.SkillId,
 //         });
 //       }
 //       return res.status(500).send({
 //         message:
 //           "Something wrong updating objective with id " +
-//           req.params.objectiveId,
+//           req.params.SkillId,
 //       });
 //     });
 // };

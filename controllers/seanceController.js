@@ -57,7 +57,7 @@ exports.cancelSession = (req, res) => {
       try {
         sendEmail({
           email: seance.player.email,
-          subject: "Annulation Seance ",
+          subject: "Annulation Séance ",
           message,
         });
 
@@ -84,7 +84,6 @@ exports.findAllSeance = (req, res) => {
   Seance.find(data)
     .populate("statistics.statistic")
     .populate("skills.skill")
-    .populate("player")
     .populate("creactedBy")
     .populate("trainingGround")
     .sort("dateSeance")

@@ -79,6 +79,12 @@ const userSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  mycoaches: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   inviteNumber: {
     type: Number,
     default: 0,
