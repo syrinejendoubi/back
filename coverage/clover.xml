@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1653001637149" clover="3.2.0">
-  <project timestamp="1653001637150" name="All files">
-    <metrics statements="3349" coveredstatements="1438" conditionals="68" coveredconditionals="55" methods="98" coveredmethods="23" elements="3515" coveredelements="1516" complexity="0" loc="3349" ncloc="3349" packages="6" files="48" classes="48"/>
+<coverage generated="1653079753999" clover="3.2.0">
+  <project timestamp="1653079753999" name="All files">
+    <metrics statements="3334" coveredstatements="1454" conditionals="69" coveredconditionals="60" methods="98" coveredmethods="23" elements="3501" coveredelements="1537" complexity="0" loc="3334" ncloc="3334" packages="6" files="48" classes="48"/>
     <package name="config">
       <metrics statements="12" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="db.js" path="C:\Users\salim\Desktop\formation ReactJs\Hicotech-Backend\config\db.js">
@@ -21,7 +21,7 @@
       </file>
     </package>
     <package name="controllers">
-      <metrics statements="2265" coveredstatements="491" conditionals="61" coveredconditionals="51" methods="85" coveredmethods="20"/>
+      <metrics statements="2250" coveredstatements="507" conditionals="62" coveredconditionals="56" methods="85" coveredmethods="20"/>
       <file name="AlertController.js" path="C:\Users\salim\Desktop\formation ReactJs\Hicotech-Backend\controllers\AlertController.js">
         <metrics statements="46" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
@@ -1068,18 +1068,18 @@
         <line num="148" count="0" type="stmt"/>
       </file>
       <file name="disciplinesController.js" path="C:\Users\salim\Desktop\formation ReactJs\Hicotech-Backend\controllers\disciplinesController.js">
-        <metrics statements="123" coveredstatements="67" conditionals="15" coveredconditionals="11" methods="5" coveredmethods="5"/>
+        <metrics statements="108" coveredstatements="83" conditionals="16" coveredconditionals="16" methods="5" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="7" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
         <line num="14" count="1" type="stmt"/>
@@ -1130,68 +1130,53 @@
         <line num="59" count="0" type="stmt"/>
         <line num="60" count="0" type="stmt"/>
         <line num="61" count="0" type="stmt"/>
-        <line num="62" count="0" type="stmt"/>
-        <line num="63" count="0" type="stmt"/>
-        <line num="64" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
-        <line num="67" count="2" type="stmt"/>
-        <line num="68" count="1" type="stmt"/>
-        <line num="69" count="1" type="stmt"/>
-        <line num="70" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="71" count="1" type="stmt"/>
-        <line num="72" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="73" count="0" type="stmt"/>
-        <line num="74" count="0" type="stmt"/>
-        <line num="75" count="0" type="stmt"/>
-        <line num="76" count="0" type="stmt"/>
+        <line num="62" count="2" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="65" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="66" count="2" type="stmt"/>
+        <line num="67" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="68" count="2" type="stmt"/>
+        <line num="69" count="2" type="stmt"/>
+        <line num="70" count="2" type="stmt"/>
+        <line num="71" count="2" type="stmt"/>
+        <line num="72" count="2" type="stmt"/>
+        <line num="73" count="2" type="stmt"/>
+        <line num="74" count="2" type="stmt"/>
+        <line num="75" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="76" count="2" type="cond" truecount="1" falsecount="0"/>
         <line num="77" count="1" type="stmt"/>
         <line num="78" count="1" type="stmt"/>
         <line num="79" count="1" type="stmt"/>
-        <line num="80" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="81" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="83" count="0" type="stmt"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="83" count="2" type="stmt"/>
         <line num="84" count="0" type="stmt"/>
         <line num="85" count="0" type="stmt"/>
-        <line num="86" count="1" type="stmt"/>
-        <line num="87" count="1" type="stmt"/>
-        <line num="88" count="1" type="stmt"/>
-        <line num="89" count="0" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
-        <line num="91" count="0" type="stmt"/>
-        <line num="92" count="0" type="stmt"/>
-        <line num="93" count="0" type="stmt"/>
-        <line num="94" count="0" type="stmt"/>
-        <line num="95" count="0" type="stmt"/>
-        <line num="96" count="0" type="stmt"/>
-        <line num="97" count="0" type="stmt"/>
-        <line num="98" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="87" count="0" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="89" count="2" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="92" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="93" count="2" type="stmt"/>
+        <line num="94" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="95" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="97" count="1" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
         <line num="99" count="1" type="stmt"/>
         <line num="100" count="1" type="stmt"/>
         <line num="101" count="1" type="stmt"/>
-        <line num="102" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="103" count="1" type="stmt"/>
-        <line num="104" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="105" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="102" count="2" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
+        <line num="104" count="0" type="stmt"/>
+        <line num="105" count="0" type="stmt"/>
         <line num="106" count="0" type="stmt"/>
         <line num="107" count="0" type="stmt"/>
-        <line num="108" count="0" type="stmt"/>
-        <line num="109" count="0" type="stmt"/>
-        <line num="110" count="1" type="stmt"/>
-        <line num="111" count="1" type="stmt"/>
-        <line num="112" count="1" type="stmt"/>
-        <line num="113" count="0" type="stmt"/>
-        <line num="114" count="0" type="stmt"/>
-        <line num="115" count="0" type="stmt"/>
-        <line num="116" count="0" type="stmt"/>
-        <line num="117" count="0" type="stmt"/>
-        <line num="118" count="0" type="stmt"/>
-        <line num="119" count="0" type="stmt"/>
-        <line num="120" count="0" type="stmt"/>
-        <line num="121" count="0" type="stmt"/>
-        <line num="122" count="0" type="stmt"/>
-        <line num="123" count="1" type="stmt"/>
+        <line num="108" count="2" type="stmt"/>
       </file>
       <file name="eventController.js" path="C:\Users\salim\Desktop\formation ReactJs\Hicotech-Backend\controllers\eventController.js">
         <metrics statements="138" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
