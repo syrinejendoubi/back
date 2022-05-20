@@ -24,6 +24,19 @@ describe("Discipline", () => {
           expect(res.body.length).toEqual(0);
         });
     });
+    test("should not add a discipline empty", async () => {
+      const data = {
+       
+      };
+      await request(app)
+        .post("/api/disciplines")
+        .send(data)
+        .expect(400)
+        .then(async (response) => {
+          expect(response.body.message).toBe("Discipline content can not be empty");
+        });
+    });
+    
   test("should add a discipline", async () => {
     const data = {
       label: "test",
@@ -41,7 +54,7 @@ describe("Discipline", () => {
       });
   });
 
-  test("should get all tasks", () => {
+  test("should get all disciplines", () => {
     request(app)
       .get("/api/disciplines")
       .expect(200)
@@ -80,4 +93,59 @@ describe("Discipline", () => {
         expect(res.body.icon).toBe(data.icon);
       });
   });
+
+  test("should delete discipline using its id",async()=>{
+    await request(app)
+      .delete("/api/disciplines/"+savedDiscipline._id)
+      .expect(200)
+      .then((res) => {
+        expect(res.body.message).toBe("Discipline deleted successfully!");
+      })
+  });
+
+  test("should return 404 when the id doesn't exist",async function(){
+    await request(app)
+      .get("/api/disciplines/"+savedDiscipline._id)
+      .expect(404)
+      .then((response)=>{
+        expect(response.body.message).toBe("Discipline not found with id "+savedDiscipline._id)
+      })
+    })
+
+    test("should return 404 when the id doesn't exist in delete",async function(){
+      await request(app)
+        .delete("/api/disciplines/"+savedDiscipline._id)
+        .expect(404)
+        .then((response)=>{
+          expect(response.body.message).toBe("Discipline not found with id "+savedDiscipline._id)
+        })
+    })
+    
+  test("should return 404 when the id doesn't exist in update",async function(){
+    const data = {
+      label: "test",
+      icon: "testIcon",
+    };
+      await request(app)
+        .put("/api/disciplines/"+savedDiscipline._id)
+        .send(data)
+        .expect(404)
+        .then((response)=>{
+          expect(response.body.message).toBe("Discipline not found with id "+savedDiscipline._id)
+      })
+    })
+
+    test("should not update a discipline empty", async () => {
+      const data = {
+       
+      };
+      await request(app)
+        .put("/api/disciplines/" + savedDiscipline._id)
+        .send(data)
+        .expect(400)
+        .then(async (response) => {
+          expect(response.body.message).toBe("Discipline content can not be empty");
+        });
+    });
+
 });

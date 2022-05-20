@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.83% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>116/155</span>
+                <span class='fraction'>124/155</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>2/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">16.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>1/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.83% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>116/155</span>
+                <span class='fraction'>124/155</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -312,9 +312,9 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -327,11 +327,11 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -466,10 +466,10 @@ const userSchema = new mongoose.Schema({
   },
   IMC: {
     type: Object,
-    default: <span class="fstat-no" title="function not covered" >function () {</span>
-<span class="cstat-no" title="statement not covered" >      if (this.weight &amp;&amp; this.height)</span>
-<span class="cstat-no" title="statement not covered" >        return calcBmi(this.weight, this.height, false);</span>
-<span class="cstat-no" title="statement not covered" >    },</span>
+    default: function () {
+      if (<span class="branch-0 cbranch-no" title="branch not covered" >this.weight &amp;&amp; this.height)</span>
+<span class="branch-0 cbranch-no" title="branch not covered" >        return c</span>alcBmi(this.weight, this.height, false);
+    },
   },
   active: {
     type: Boolean,
@@ -482,11 +482,11 @@ const userSchema = new mongoose.Schema({
 });
 &nbsp;
 userSchema.pre("save", async function (next) {
-<span class="cstat-no" title="statement not covered" >  if (!this.isModified("password")) next();</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  const salt = await bcrypt.genSalt(10);</span>
-<span class="cstat-no" title="statement not covered" >  this.password = await bcrypt.hash(this.password, salt);</span>
-<span class="cstat-no" title="statement not covered" >});</span>
+  if (!this.isModified("password")) <span class="branch-0 cbranch-no" title="branch not covered" >next();</span>
+&nbsp;
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
 userSchema.methods.getSignedJwtToken = <span class="fstat-no" title="function not covered" >function () {</span>
 <span class="cstat-no" title="statement not covered" >  const payload = {</span>
 <span class="cstat-no" title="statement not covered" >    id: this._id,</span>
@@ -535,7 +535,7 @@ module.exports = mongoose.model("User", userSchema);
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Thu May 19 2022 10:55:57 GMT+0100 (Central European Standard Time)
+                at Fri May 20 2022 22:45:53 GMT+0100 (Central European Standard Time)
             </div>
         <script src="../prettify.js"></script>
         <script>

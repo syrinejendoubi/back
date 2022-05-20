@@ -113,6 +113,8 @@ exports.findAllSeance = (req, res) => {
     .populate("statistics.statistic")
     .populate("skills.skill")
     .populate("creactedBy")
+    .populate("programme")
+    .populate("player")
     .populate("trainingGround")
     .sort("dateSeance")
     .then((seances) => {

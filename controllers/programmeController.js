@@ -48,11 +48,6 @@ exports.findProgramme = (req, res) => {
         }
         res.send(programme);
     }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Programme not found with id " + req.params.programmeId
-            });                
-        }
         return res.status(500).send({
             message: "Something wrong retrieving programme with id " + req.params.programmeId
         });
@@ -78,11 +73,6 @@ exports.updateProgramme = (req, res) => {
         }
         res.send(programme);
     }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Programme not found with id " + req.params.programmeId
-            });                
-        }
         return res.status(500).send({
             message: "Something wrong updating note with id " + req.params.programmeId
         });
@@ -100,11 +90,6 @@ exports.deleteProgramme = (req, res) => {
         }
         res.send({message: "Programme deleted successfully!"});
     }).catch(err => {
-        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
-            return res.status(404).send({
-                message: "Programme not found with id " + req.params.programmeId
-            });                
-        }
         return res.status(500).send({
             message: "Could not delete programme with id " + req.params.programmeId
         });
