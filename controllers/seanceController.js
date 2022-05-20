@@ -102,7 +102,12 @@ exports.findAllSeance = (req, res) => {
 // Find a single seance with a seanceId
 exports.findSeance = (req, res) => {
   Seance.findById(req.params.seanceId)
-    .populate("statistics")
+    .populate("statistics.statistic")
+    .populate("skills.skill")
+    .populate("player")
+    .populate("creactedBy")
+    .populate("trainingGround")
+    .populate("programme")
     .then((seance) => {
       if (!seance) {
         return res.status(404).send({

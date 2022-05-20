@@ -12,7 +12,8 @@ const programme = require("../routes/api/programmeRoutes");
 const seance = require("../routes/api/seanceRoutes");
 const assignChallenge = require("../routes/api/assignChallengeRoutes");
 const abonnement = require("../routes/api/subscriptionRoutes");
-const objective = require("../routes/api/objectiveRoutes");
+const statisticObjective = require("../routes/api/statisticobjectiveRoutes");
+const skillObjective = require("../routes/api/skillObjectiveRoutes");
 const alert = require("../routes/api/alertRoutes");
 
 const express = require("express");
@@ -40,8 +41,9 @@ const createServer = () => {
     events,
     abonnement,
     assignChallenge,
-    objective,
-    alert
+    alert,
+    statisticObjective,
+    skillObjective
   );
 
   app.use(errorHandler);
