@@ -1,6 +1,8 @@
 const Seance = require("../models/seanceModel");
 const sendEmail = require("../utils/sendEmail");
 var jsrender = require("jsrender");
+const Schedular = require("node-schedule");
+
 //Create new Seance
 exports.createSeance = (req, res) => {
   // Request validation
@@ -13,7 +15,6 @@ exports.createSeance = (req, res) => {
 
   // Create a Seance
   const seance = new Seance(seanceData);
-
   // Save Seance in the database
   seance
     .save()
@@ -25,6 +26,34 @@ exports.createSeance = (req, res) => {
         message: err.message || "Something wrong while creating the seance.",
       });
     });
+  const template = jsrender.templates("./templates/annulerSeance.html");
+  const date = new Date(seance?.dateSeance);
+  date.setDate(date.getDate() - 1);
+  console.log(date);
+  var porgrammedDate = date?.toISOString().slice(0, 10);
+  const message = template.render({
+    P_firstname: seance?.player?.firstName,
+    P_lastname: seance?.player?.lastName,
+    C_firstname: seance?.creactedBy?.firstName,
+    C_lastname: seance?.creactedBy?.lastName,
+    date: porgrammedDate,
+    programme: seance?.programme?.title,
+    description: seance?.programme?.description,
+    lieu: seance?.trainingGround?.city,
+    adresse: seance?.trainingGround?.address,
+  });
+  Schedular.scheduleJob(date, function () {
+    try {
+      sendEmail({
+        email: seance.player.email,
+        subject: "Séance programmée ",
+        message,
+      });
+      console.log("email sent");
+    } catch (err) {
+      return next(new ErrorResponse("Email n'a pas pu être envoyé", 500));
+    }
+  });
 };
 exports.cancelSession = (req, res) => {
   if (Object.keys(req.body).length === 0) {
@@ -85,6 +114,8 @@ exports.findAllSeance = (req, res) => {
     .populate("statistics.statistic")
     .populate("skills.skill")
     .populate("creactedBy")
+    .populate("programme")
+    .populate("player")
     .populate("trainingGround")
     .sort("dateSeance")
     .then((seances) => {
@@ -177,6 +208,31 @@ exports.deleteSeance = (req, res) => {
       }
       return res.status(500).send({
         message: "Could not delete seance with id " + req.params.seanceId,
+      });
+    });
+};
+
+// get all seance by date , player 
+exports.findMySeance = (req, res) => {
+  const data = req.query;
+  Seance.find({
+    player : req.params.playerId,
+    dateSeance:{
+      "$gte": new Date(data.from).toISOString() ,
+      "$lt": new Date(data.to).toISOString()}
+  })
+    .populate("statistics.statistic")
+    .populate("skills.skill")
+    .populate("creactedBy")
+    .populate("programme")
+    .populate("trainingGround")
+    .sort("dateSeance")
+    .then((seances) => {
+      res.send(seances);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Something wrong while retrieving seances.",
       });
     });
 };

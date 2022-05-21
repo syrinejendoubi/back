@@ -136,16 +136,3 @@ exports.deleteSkill = (req, res) => {
       });
     });
 };
-
-// Retrieve all skills from the database.
-exports.getAllSkills = (req, res) => {
-  const data = req.query  ;
-  Skill.find(data)
-  .then(skills => {
-      res.send(skills);
-  }).catch(err => {
-      res.status(500).send({
-          message: err.message || "Something wrong while retrieving programmes."
-      });
-  });
-};
