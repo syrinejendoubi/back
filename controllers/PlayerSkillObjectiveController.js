@@ -75,11 +75,6 @@ exports.findSkillObjective = (req, res) => {
       res.send(objective);
     })
     .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message: "objective not found with id " + req.params.objectiveId,
-        });
-      }
       return res.status(500).send({
         message:
           "Something wrong retrieving seance with id " + req.params.objectiveId,
@@ -106,11 +101,6 @@ exports.updateSkillObjective = (req, res) => {
       res.send(objective);
     })
     .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message: "Objective not found with id " + req.params.objectiveId,
-        });
-      }
       return res.status(500).send({
         message:
           "Something wrong updating objective with id " +
@@ -131,11 +121,6 @@ exports.deleteObjective = (req, res) => {
       res.send({ message: "objective deleted successfully!" });
     })
     .catch((err) => {
-      if (err.kind === "ObjectId" || err.name === "NotFound") {
-        return res.status(404).send({
-          message: "objective not found with id " + req.params.objectiveId,
-        });
-      }
       return res.status(500).send({
         message: "Could not delete seance with id " + req.params.objectiveId,
       });

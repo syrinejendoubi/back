@@ -87,7 +87,7 @@ describe("Les objective des statistique d'un joueur", () => {
       .then(async (response) => {
         expect(response.body).toBeTruthy();
         expect(response.body.player).toBe(data.player.toString());
-        expect(response.body.statistic).toBe(data.statistic.toString());
+        expect(response.body.statistic._id).toBe(data.statistic.toString());
         expect(response.body.value).toBe(data.value);
         expect(moment(response.body.beforeDate).format("YYYY-MM-DD")).toBe(
           data.beforeDate
@@ -137,7 +137,7 @@ describe("Les objective des statistique d'un joueur", () => {
         expect(Array.isArray(res.body)).toBeTruthy();
         expect(res.body.length).toEqual(1);
         expect(res.body[0].player._id).toBe(savedObjective.player);
-        expect(res.body[0].statistic._id).toBe(savedObjective.statistic);
+        expect(res.body[0].statistic._id).toBe(savedObjective.statistic._id);
         expect(res.body[0].creactedBy._id).toBe(savedObjective.creactedBy);
         expect(res.body[0].value).toBe(savedObjective.value);
         expect(res.body[0].beforeDate).toBe(savedObjective.beforeDate);
