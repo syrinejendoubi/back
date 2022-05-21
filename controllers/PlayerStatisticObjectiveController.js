@@ -6,7 +6,7 @@ exports.createStatisticObjective = (req, res) => {
   const objectiveData = req.body;
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
-      message: "les champs ne peuvent pas étre vide",
+      message: "Les champs ne peut pas être vide",
     });
   }
 
@@ -22,7 +22,7 @@ exports.createStatisticObjective = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message ||
+          "Enter tous les champs de l'objective" ||
           "Un erreur est servenu lors de la création de l'objectif.",
       });
     });
@@ -75,11 +75,6 @@ exports.findStatisticObjective = (req, res) => {
       res.send(objective);
     })
     .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message: "objective not found with id " + req.params.objectiveId,
-        });
-      }
       return res.status(500).send({
         message:
           "Something wrong retrieving seance with id " + req.params.objectiveId,
@@ -106,11 +101,6 @@ exports.updateStatisticObjective = (req, res) => {
       res.send(objective);
     })
     .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message: "Objective not found with id " + req.params.objectiveId,
-        });
-      }
       return res.status(500).send({
         message:
           "Something wrong updating objective with id " +
@@ -131,48 +121,12 @@ exports.deleteObjective = (req, res) => {
       res.send({ message: "objective deleted successfully!" });
     })
     .catch((err) => {
-      if (err.kind === "ObjectId" || err.name === "NotFound") {
-        return res.status(404).send({
-          message: "objective not found with id " + req.params.objectiveId,
-        });
-      }
       return res.status(500).send({
         message: "Could not delete seance with id " + req.params.objectiveId,
       });
     });
 };
-// Modify an objective for a specified coach and player
-exports.modifyStatsObjective = (req, res) => {
-  // Validate Request
-  if (Object.keys(req.body).length === 0) {
-    return res.status(400).send({
-      message: "statistic's session content can not be empty",
-      type: "error",
-    });
-  }
 
-  // Find and update event with the request body
-  Objective.findByIdAndUpdate(req.params.objectiveId, req.body, { new: true })
-    .then((stat) => {
-      if (!stat) {
-        return res.status(404).send({
-          message: "skill not found with id " + req.params.objectiveId,
-        });
-      }
-      res.send(stat);
-    })
-    .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message: "skill not found with id " + req.params.objectiveId,
-        });
-      }
-      return res.status(500).send({
-        message:
-          "Something wrong updating skill with id " + req.params.objectiveId,
-      });
-    });
-};
 // // Modify an objective for a specified coach and player
 // exports.modifySkillObjectiveByCoachAndPlayer = (req, res) => {
 //   const { value, beforeDate, done } = req.body;

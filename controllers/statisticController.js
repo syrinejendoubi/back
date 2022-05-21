@@ -68,12 +68,6 @@ exports.findSingleStatistic = (req, res) => {
       res.send(stat);
     })
     .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message:
-            "statistique non trouvée avec l'id  " + req.params.statisticId,
-        });
-      }
       return res.status(500).send({
         message:
           "Un problème est survenu lors de la récupération de la statistique avec l'id " +
@@ -105,11 +99,6 @@ exports.updateStatistic = (req, res) => {
       });
     })
     .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message: "Statistique non trouvée avec id  " + req.params.statisticId,
-        });
-      }
       return res.status(500).send({
         message:
           "Un problème est survenu lors de la mise à jour de la statistique ",
@@ -132,11 +121,6 @@ exports.deleteStatistic = (req, res) => {
       });
     })
     .catch((err) => {
-      if (err.kind === "ObjectId" || err.name === "NotFound") {
-        return res.status(404).send({
-          message: "statistique non trouvée avec id" + req.params.statisticId,
-        });
-      }
       return res.status(500).send({
         message: "statistique non trouvée avec id " + req.params.statisticId,
       });

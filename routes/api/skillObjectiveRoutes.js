@@ -16,8 +16,6 @@ router.post("/skillObjective", createSkillObjective);
 router.get("/skillObjectives/:objectiveId", findSkillObjective);
 // update objective
 router.put("/skillObjectives/:objectiveId", updateSkillObjective);
-// add objective's skill by platerId and coach id
-router.put("/modifyskillObjectiveStat/:objectiveId", modifySkillObjective);
 // delete objective
 router.delete("/skillObjectives/:objectiveId", deleteObjective);
 
