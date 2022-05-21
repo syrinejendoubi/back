@@ -5,15 +5,18 @@ const playerStatisticObjectiveSchema = new mongoose.Schema(
     player: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
 
     statistic: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Statistic",
+      required: true,
     },
     value: {
       type: Number,
       default: undefined,
+      required: true,
     },
     beforeDate: {
       type: Date,
@@ -22,10 +25,12 @@ const playerStatisticObjectiveSchema = new mongoose.Schema(
     done: {
       type: Boolean,
       default: false,
+      required: true,
     },
     creactedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
   },
   {

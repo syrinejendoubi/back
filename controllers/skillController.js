@@ -65,11 +65,6 @@ exports.findSingleSkill = (req, res) => {
       res.send(skill);
     })
     .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message: "compétence non trouvée avec l'id  " + req.params.skillId,
-        });
-      }
       return res.status(500).send({
         message:
           "Un problème est survenu lors de la récupération de la statistique avec l'id " +
@@ -99,11 +94,6 @@ exports.updateSkill = (req, res) => {
       });
     })
     .catch((err) => {
-      if (err.kind === "ObjectId") {
-        return res.status(404).send({
-          message: "Compétence non trouvée avec id  " + req.params.skillId,
-        });
-      }
       return res.status(500).send({
         message:
           "Un problème est survenu lors de la mise à jour de la compétence ",
@@ -126,11 +116,6 @@ exports.deleteSkill = (req, res) => {
       });
     })
     .catch((err) => {
-      if (err.kind === "ObjectId" || err.name === "NotFound") {
-        return res.status(404).send({
-          message: "compétence non trouvée avec id" + req.params.skillId,
-        });
-      }
       return res.status(500).send({
         message: "compétence non trouvée avec id " + req.params.skillId,
       });

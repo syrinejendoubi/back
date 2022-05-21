@@ -5,14 +5,17 @@ const playerSkillObjectiveSchema = new mongoose.Schema(
     player: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     skill: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "skill",
+      required: true,
     },
     value: {
       type: Number,
       default: undefined,
+      required: true,
     },
     beforeDate: {
       type: Date,
@@ -21,10 +24,12 @@ const playerSkillObjectiveSchema = new mongoose.Schema(
     done: {
       type: Boolean,
       default: false,
+      required: true,
     },
     creactedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
   },
   {
