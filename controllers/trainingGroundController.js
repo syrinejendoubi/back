@@ -30,9 +30,6 @@ exports.createTrainingGround = async (req, res, next) => {
 };
 
 exports.getTrainingGrounds = async (req, res, next) => {
-  if (!req.params.id) {
-    return next(new ErrorResponse("Veuillez fournir l'ID", 400));
-  }
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     const traininGrounds = await TrainingGround.find({
       createdBy: req.params.id,
@@ -42,14 +39,11 @@ exports.getTrainingGrounds = async (req, res, next) => {
     }
     return next(new ErrorResponse("Lieu d'entrainement non trouvé", 404));
   } else {
-    return next(new ErrorResponse("Veuillez fournir une id valide", 500));
+    return next(new ErrorResponse("Veuillez fournir une id valide", 400));
   }
 };
 
 exports.updateTrainingGround = async (req, res, next) => {
-  if (!req.params.id) {
-    return next(new ErrorResponse("Veuillez fournir l'ID", 400));
-  }
   const { createdBy, city, address, coordinates } = req.body;
   if (!createdBy || !city || !address || !coordinates) {
     return next(
@@ -74,15 +68,11 @@ exports.updateTrainingGround = async (req, res, next) => {
     }
     return next(new ErrorResponse("Mise à jour a échoué", 500));
   } else {
-    return next(new ErrorResponse("Veuillez fournir une id valide", 500));
+    return next(new ErrorResponse("Veuillez fournir une id valide", 400));
   }
 };
 
 exports.deleteTrainingGround = async (req, res, next) => {
-  if (!req.params.id) {
-    return next(new ErrorResponse("Veuillez fournir l'ID", 400));
-  }
-
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     TrainingGround.findByIdAndRemove(req.params.id, (err, data) => {
       if (err) {
@@ -103,6 +93,6 @@ exports.deleteTrainingGround = async (req, res, next) => {
       });
     });
   } else {
-    return next(new ErrorResponse("Veuillez fournir une id valide", 500));
+    return next(new ErrorResponse("Veuillez fournir une id valide", 400));
   }
 };
