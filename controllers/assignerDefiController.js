@@ -23,37 +23,14 @@ exports.assignChallenge = (req, res) => {
     });
 };
 
-exports.assignChallenge = (req, res) => {
-  // Request validation
-  const defiData = req.body;
-  if (Object.keys(req.body).length === 0) {
-    return res.status(400).send({
-      message: "Defi content can not be empty",
-    });
-  }
-
-  const assignedChallenge = new AssignChallenge(defiData);
-
-  assignedChallenge
-    .save()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Something wrong while creating the defi.",
-      });
-    });
-};
-
 // Retrieve all defis from the database.
-exports.findAllAssignedChallenges = (req, res) => {
+exports.findAllAssignedChallenges = async (req, res) => {
   const data = req.query;
   AssignChallenge.find(data)
     .populate("createdBy")
     .populate("defi")
     .then((defis) => {
-      res.send(defis);
+      return res.send(defis);
     })
     .catch((err) => {
       res.status(500).send({
@@ -67,6 +44,7 @@ exports.findAllAssignedChallengesFull = (req, res) => {
     .populate("defi")
     .populate("done")
     .populate("assignedTo")
+    .sort("-createdAt")
     .then((defis) => {
       res.send(defis);
     })
@@ -78,7 +56,6 @@ exports.findAllAssignedChallengesFull = (req, res) => {
 };
 
 exports.updateAssignedChallenge = (req, res) => {
-  // Validate Request
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
       message: "Challenge content can not be empty",

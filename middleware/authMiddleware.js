@@ -28,6 +28,7 @@ exports.protect = async (req, res, next) => {
     req.user = await User.findById(decoded.id);
     next();
   } catch (error) {
+    console.log("error: ", error);
     return next(
       new ErrorResponse(
         "Vous n'êtes pas autorisé(e) à accéder à cette page",

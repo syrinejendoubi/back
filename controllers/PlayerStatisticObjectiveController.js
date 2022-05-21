@@ -1,5 +1,8 @@
 const Objective = require("../models/StatisticObjectiveModal copy");
-
+const schedule = require("node-schedule");
+const Alert = require("../models/AlertModal");
+const Seance = require("../models/seanceModel");
+const moment = require("moment");
 //Create new Seance
 exports.createStatisticObjective = (req, res) => {
   // Request validation
@@ -12,11 +15,50 @@ exports.createStatisticObjective = (req, res) => {
 
   // Create a Seance
   const ojective = new Objective(objectiveData);
-
   // Save Seance in the database
   ojective
     .save()
-    .then((data) => {
+    .then(async (data) => {
+      await data.populate("statistic");
+      const date = moment(req.body.beforeDate);
+      schedule.scheduleJob(date, function () {
+        console.log("working");
+        const query = {
+          creactedBy: data.creactedBy,
+          player: data.player,
+          "statistics.statistic": req.body.statistic,
+          "statistics.value": {
+            [data.statistic.max ? "$gte" : "$lte"]: req.body.value,
+          },
+        };
+        Seance.find(query)
+          .then((seances) => {
+            let AlertData = {
+              player: data?.player,
+              statistique: req.body?.statistic,
+              coach: data?.creactedBy,
+              isPositiveAlert: seances?.length > 0 ? true : false,
+              maximiser: data?.statistic?.max,
+              date: req?.body?.beforeDate,
+              valeurObj: req?.body?.value,
+            };
+            const alert = new Alert(AlertData);
+            alert.save().catch((err) => {
+              return res.status(500).send({
+                message:
+                  err.message || "Something wrong while creating the alert.",
+              });
+            });
+          })
+          .catch((err) => {
+            if (err.kind === "ObjectId") {
+              return res.status(404).send({
+                message:
+                  "Objective not found with id " + req.params.objectiveId,
+              });
+            }
+          });
+      });
       res.send(data);
     })
     .catch((err) => {

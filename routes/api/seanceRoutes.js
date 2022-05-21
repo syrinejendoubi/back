@@ -6,7 +6,7 @@ const {
   deleteSeance,
   updateSeance,
   cancelSession,
-  findMySeance
+  findMySeance,
 } = require("../../controllers/seanceController");
 const { protect, authorize } = require("../../middleware/authMiddleware");
 // Get All seances
@@ -22,6 +22,6 @@ router.put("/seances/annuler/:seanceId", cancelSession);
 // delete seance
 router.delete("/seances/:seanceId", deleteSeance);
 // get seances by player
-router.get("/player/:playerId/seances",findMySeance); 
+router.get("/player/:playerId/seances", findMySeance);
 
 module.exports = router;
