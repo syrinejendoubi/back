@@ -2,6 +2,7 @@ const Seance = require("../models/seanceModel");
 const sendEmail = require("../utils/sendEmail");
 var jsrender = require("jsrender");
 const Schedular = require("node-schedule");
+
 //Create new Seance
 exports.createSeance = (req, res) => {
   // Request validation
@@ -207,6 +208,31 @@ exports.deleteSeance = (req, res) => {
       }
       return res.status(500).send({
         message: "Could not delete seance with id " + req.params.seanceId,
+      });
+    });
+};
+
+// get all seance by date , player 
+exports.findMySeance = (req, res) => {
+  const data = req.query;
+  Seance.find({
+    player : req.params.playerId,
+    dateSeance:{
+      "$gte": new Date(data.from).toISOString() ,
+      "$lt": new Date(data.to).toISOString()}
+  })
+    .populate("statistics.statistic")
+    .populate("skills.skill")
+    .populate("creactedBy")
+    .populate("programme")
+    .populate("trainingGround")
+    .sort("dateSeance")
+    .then((seances) => {
+      res.send(seances);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Something wrong while retrieving seances.",
       });
     });
 };
