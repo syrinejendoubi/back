@@ -29,6 +29,7 @@ exports.findAllAssignedChallenges = async (req, res) => {
   AssignChallenge.find(data)
     .populate("createdBy")
     .populate("defi")
+    .sort("-createdAt")
     .then((defis) => {
       return res.send(defis);
     })
