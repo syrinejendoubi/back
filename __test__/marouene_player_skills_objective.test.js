@@ -47,10 +47,6 @@ describe("Les objective des compétence d'un joueur", () => {
       alerted: false,
       discipline: discipline._id,
     });
-    // console.log("player : " + player);
-    // console.log("coach : " + coach);
-    // console.log("discipline : " + discipline);
-    // console.log("statistic : " + statistic);
   }),
     afterAll(async () => {
       await mongoose.disconnect();

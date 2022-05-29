@@ -2,11 +2,18 @@ const Seance = require("../models/seanceModel");
 const sendEmail = require("../utils/sendEmail");
 var jsrender = require("jsrender");
 const Schedular = require("node-schedule");
+const dateToCron = (date) => {
+  const minutes = date.getMinutes();
+  const hours = date.getHours() - 1;
+  const days = date.getDate() - 1;
+  const months = date.getMonth() + 1;
 
+  return `${minutes} ${hours} ${days} ${months} ${"*"}`;
+};
 //Create new Seance
 exports.createSeance = (req, res) => {
   // Request validation
-  const seanceData = req.body;
+  var seanceData = req.body;
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({
       message: "Seance content can not be empty",
@@ -16,43 +23,51 @@ exports.createSeance = (req, res) => {
   // Create a Seance
   const seance = new Seance(seanceData);
   // Save Seance in the database
-  seance
-    .save()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Something wrong while creating the seance.",
+  seance.save().then((data) => {
+    const template = jsrender.templates("./templates/programmerSeance.html");
+    console.log(seance?.dateSeance);
+    const date = new Date(seance?.dateSeance);
+    const cron = dateToCron(date);
+    Seance.findById(seance?._id)
+      .populate("statistics.statistic")
+      .populate("skills.skill")
+      .populate("creactedBy")
+      .populate("programme")
+      .populate("player")
+      .populate("trainingGround")
+      .sort("dateSeance")
+      .then((data) => {
+        var porgrammedDate = date?.toISOString().slice(0, 10);
+        const message = template.render({
+          P_firstname: data?.player?.firstName,
+          P_lastname: data?.player?.lastName,
+          C_firstname: data?.creactedBy?.firstName,
+          C_lastname: data?.creactedBy?.lastName,
+          date: porgrammedDate,
+          programme: data?.programme?.title,
+          description: data?.programme?.description,
+          lieu: data?.trainingGround?.city,
+          adresse: data?.trainingGround?.address,
+        });
+        res.send(data);
+        Schedular.scheduleJob(cron, async function () {
+          try {
+            sendEmail({
+              email: data.player.email,
+              subject: "Séance programmée ",
+              message,
+            });
+            console.log("email sent");
+          } catch (err) {
+            return next(new ErrorResponse("Email n'a pas pu être envoyé", 500));
+          }
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Something wrong while creating the seance.",
+        });
       });
-    });
-  const template = jsrender.templates("./templates/annulerSeance.html");
-  const date = new Date(seance?.dateSeance);
-  date.setDate(date.getDate() - 1);
-  console.log(date);
-  var porgrammedDate = date?.toISOString().slice(0, 10);
-  const message = template.render({
-    P_firstname: seance?.player?.firstName,
-    P_lastname: seance?.player?.lastName,
-    C_firstname: seance?.creactedBy?.firstName,
-    C_lastname: seance?.creactedBy?.lastName,
-    date: porgrammedDate,
-    programme: seance?.programme?.title,
-    description: seance?.programme?.description,
-    lieu: seance?.trainingGround?.city,
-    adresse: seance?.trainingGround?.address,
-  });
-  Schedular.scheduleJob(date, function () {
-    try {
-      sendEmail({
-        email: seance.player.email,
-        subject: "Séance programmée ",
-        message,
-      });
-      console.log("email sent");
-    } catch (err) {
-      return next(new ErrorResponse("Email n'a pas pu être envoyé", 500));
-    }
   });
 };
 exports.cancelSession = (req, res) => {
@@ -72,13 +87,14 @@ exports.cancelSession = (req, res) => {
           message: "Seance not found with id " + req.params.seanceId,
         });
       }
+      console.log(seance?.player?.firstName);
       const template = jsrender.templates("./templates/annulerSeance.html");
 
       const message = template.render({
         P_firstname: seance?.player?.firstName,
         P_lastname: seance?.player?.lastName,
-        C_firstname: seance?.creactedBy?.firstName,
-        C_lastname: seance?.creactedBy?.lastName,
+        C_firstname: seanceData?.creactedBy?.firstName,
+        C_lastname: seanceData?.creactedBy?.lastName,
         date: seance?.dateSeance.toISOString().slice(0, 10),
         raison: seance?.sessionCancelled?.reason,
       });
@@ -212,14 +228,15 @@ exports.deleteSeance = (req, res) => {
     });
 };
 
-// get all seance by date , player 
+// get all seance by date , player
 exports.findMySeance = (req, res) => {
   const data = req.query;
   Seance.find({
-    player : req.params.playerId,
-    dateSeance:{
-      "$gte": new Date(data.from).toISOString() ,
-      "$lt": new Date(data.to).toISOString()}
+    player: req.params.playerId,
+    dateSeance: {
+      $gte: new Date(data.from).toISOString(),
+      $lt: new Date(data.to).toISOString(),
+    },
   })
     .populate("statistics.statistic")
     .populate("skills.skill")
