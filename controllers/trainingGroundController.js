@@ -2,8 +2,8 @@ const TrainingGround = require("../models/trainingGroundModel");
 const ErrorResponse = require("../utils/errorResponse");
 const mongoose = require("mongoose");
 exports.createTrainingGround = async (req, res, next) => {
-  const { createdBy, city, address, coordinates } = req.body;
-  if (!createdBy || !city || !address || !coordinates) {
+  const { createdBy, city, address } = req.body;
+  if (!createdBy || !city || !address) {
     return next(
       new ErrorResponse("Veuillez fournir tous les renseignements requis", 400)
     );
@@ -44,8 +44,8 @@ exports.getTrainingGrounds = async (req, res, next) => {
 };
 
 exports.updateTrainingGround = async (req, res, next) => {
-  const { createdBy, city, address, coordinates } = req.body;
-  if (!createdBy || !city || !address || !coordinates) {
+  const { createdBy, city, address } = req.body;
+  if (!createdBy || !city || !address) {
     return next(
       new ErrorResponse("Veuillez fournir tous les renseignements requis", 400)
     );

@@ -17,7 +17,6 @@ const trainingGroundSchema = new mongoose.Schema(
     },
     coordinates: {
       type: [Number],
-      required: [true, "veuillez ajouter les coordonnées du lieu"],
       index: "2dsphere",
     },
   },

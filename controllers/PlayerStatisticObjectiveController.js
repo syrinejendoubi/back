@@ -12,7 +12,14 @@ exports.createStatisticObjective = (req, res) => {
       message: "Les champs ne peut pas être vide",
     });
   }
+  const dateToCron = (date) => {
+    const minutes = date.getMinutes();
+    const hours = date.getHours() - 1;
+    const days = date.getDate() - 1;
+    const months = date.getMonth() + 1;
 
+    return `${minutes} ${hours} ${days} ${months} ${"*"}`;
+  };
   // Create a Seance
   const ojective = new Objective(objectiveData);
   // Save Seance in the database
@@ -20,7 +27,8 @@ exports.createStatisticObjective = (req, res) => {
     .save()
     .then(async (data) => {
       await data.populate("statistic");
-      const date = moment(req.body.beforeDate);
+      const date = new Date(dateToCron(req.body.beforeDate));
+
       schedule.scheduleJob(date, function () {
         console.log("working");
         const query = {
