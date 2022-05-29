@@ -30,7 +30,7 @@ describe("Invitation", () => {
     };
     await request(app)
       .post("/api/invitations")
-      .send(data)
+      .send()
       .expect(400)
       .then(async (response) => {
         expect(response.body.message).toBe("Invitation content can not be empty");
@@ -70,7 +70,16 @@ describe("Invitation", () => {
       })
   })
 
-  test("should return 404 when the id doesn't exist in delete",async function(){
+  test("should return invitation",async function(){
+    await request(app)
+      .get("/api/invitations/62892d9db143b469dee59728")
+      .expect(200)
+      .then((response)=>{
+        expect(Array.isArray(res.body)).toBeTruthy();
+      })
+  })
+
+  test("should return 404 when the id doesn't exist in delete with invalid id ",async function(){
       await request(app)
         .delete("/api/invitations/"+ "012354687" ) 
         .expect(404)
@@ -78,20 +87,43 @@ describe("Invitation", () => {
           expect(response.body.message).toBe("Invitation not found with id "+ "012354687")
         })
   })
-    
-  test("should return 404 when the id doesn't exist in update",async function(){
+   
+  test("should return 404 when the id doesn't exist in delete with valid id ",async function(){
+    await request(app)
+      .delete("/api/invitations/62892d9db143b469dee59728" ) 
+      .expect(404)
+      .then((response)=>{
+        expect(response.body.message).toBe("Invitation not found with id ")
+      })
+  })
+  test("should return 404 when the id doesn't exist in update with invalid id ",async function(){
     const data = {
         etat: "annulé",
         expired : true
     };
       await request(app)
-        .put("/api/invitations/"+"012354687")
+        .put("/api/invitations/62892d9db143b469dee59728")
         .send(data)
         .expect(404)
         .then((response)=>{
-          expect(response.body.message).toBe("Invitation not found with id "+"012354687")
+          expect(response.body.message).toBe("Invitation not found with id 62892d9db143b469dee59728")
       })
     })
+
+
+    test("should return 404 when the id doesn't exist in update widh valid id ",async function(){
+      const data = {
+          etat: "annulé",
+          expired : true
+      };
+        await request(app)
+          .put("/api/invitations/"+"012354687")
+          .send(data)
+          .expect(404)
+          .then((response)=>{
+            expect(response.body.message).toBe("Invitation not found with id "+"012354687")
+        })
+      })
   
     
 

@@ -1,11 +1,10 @@
 const request = require("supertest");
 const { createServer } = require("../utils/serverUtils");
 const mongoose = require("mongoose");
-const connectDB = require("../config/db");
 const app = createServer();
 const { MongoMemoryServer } = require("mongodb-memory-server");
 
-describe("Programme", () => {
+describe("Event", () => {
   jest.setTimeout(10000);
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
@@ -15,36 +14,38 @@ describe("Programme", () => {
       await mongoose.disconnect();
       await mongoose.connection.close();
     }),
-    test("should get all programmes (empty programmes) ", async () => {
+    test("should get all events (empty events) ", async () => {
       await request(app)
-        .get("/api/programme")
+        .get("/api/events")
         .expect(200)
         .then((res) => {
           expect(Array.isArray(res.body)).toBeTruthy();
           expect(res.body.length).toEqual(0);
         });
     });
-  test("should not add a programme empty", async () => {
+  test("should not add a event empty", async () => {
     const data = {
      
     };
     await request(app)
-      .post("/api/programmes")
+      .post("/api/events")
       .send(data)
       .expect(400)
       .then(async (response) => {
-        expect(response.body.message).toBe("Programme content can not be empty");
+        expect(response.body.message).toBe("Event content can not be empty");
       });
   });
-  test("should add a programme", async () => {
+  test("should add a event", async () => {
+  
     const data = {
-      title: "programme test",
-      description: "programme test",
+      title: "event test",
+      description: "event test",
       image : "",
-      videoLink : "http://127.0.0.1:5000/hicotech"
+      etat:"Pour Tous",
+     
     };
     await request(app)
-      .post("/api/programmes")
+      .post("/api/events")
       .send(data)
       .expect(200)
       .then(async (response) => {
@@ -52,73 +53,74 @@ describe("Programme", () => {
         expect(response.body.title).toBe(data.title);
         expect(response.body.description).toBe(data.description);
         expect(response.body.image).toBe(data.image);
-        expect(response.body.videoLink).toBe(data.videoLink);
-        savedProgramme = response.body;
+        expect(response.body.etat).toBe(data.etat);
+   
+        savedEvent = response.body;
       });
   });
 
-  test("should get all programmes", () => {
+  test("should get all events", () => {
     request(app)
-      .get("/api/programmes")
+      .get("/api/events")
       .expect(200)
       .then((res) => {
         expect(Array.isArray(res.body)).toBeTruthy();
         expect(res.body.length).toEqual(1);
-        expect(res.body[0]._id).toBe(savedProgramme._id);
-        expect(res.body[0].title).toBe(savedProgramme.title);
-        expect(res.body[0].description).toBe(savedProgramme.description);
+        expect(res.body[0]._id).toBe(savedEvent._id);
+        expect(res.body[0].title).toBe(savedEvent.title);
+        expect(res.body[0].description).toBe(savedEvent.description);
       });
   });
 
-  test("should return a single programme", async function () {
+  test("should return a single event", async function () {
     await request(app)
-      .get("/api/programmes/" + savedProgramme._id)
+      .get("/api/events/" + savedEvent._id)
       .expect(200)
       .then((res) => {
-        expect(res.body._id).toBe(savedProgramme._id);
-        expect(res.body.title).toBe(savedProgramme.title);
-        expect(res.body.description).toBe(savedProgramme.description);
+        expect(res.body._id).toBe(savedEvent._id);
+        expect(res.body.title).toBe(savedEvent.title);
+        expect(res.body.description).toBe(savedEvent.description);
       });
       
   });
 
-  test("should not update a programme empty", async () => {
+  test("should not update a event empty", async () => {
     const data = {
      
     };
     await request(app)
-      .put("/api/programmes/" + savedProgramme._id)
+      .put("/api/events/" + savedEvent._id)
       .send(data)
       .expect(400)
       .then(async (response) => {
-        expect(response.body.message).toBe("Programme content can not be empty");
+        expect(response.body.message).toBe("Event content can not be empty");
       });
   });
   
-  test("should update a programme", async () => {
+  test("should update a event", async () => {
     const data = {
-      title: "programme put test",
-      description: "programme put  test",
-      image : "",
-      videoLink : "http://127.0.0.1:5000/hicotech"
+      title: "event put test",
+      description: "event put  test",
+      etat:"Mes Joueurs",
+     
     };
     await request(app)
-      .put("/api/programmes/" + savedProgramme._id)
+      .put("/api/events/" + savedEvent._id)
       .send(data)
       .expect(200)
       .then((res) => {
-        expect(res.body._id).toBe(savedProgramme._id);
+        expect(res.body._id).toBe(savedEvent._id);
         expect(res.body.title).toBe(data.title);
         expect(res.body.description).toBe(data.description);
       });
   });
 
-  test("should delete programme using its id",async()=>{
+  test("should delete event using its id",async()=>{
     await request(app)
-      .delete("/api/programmes/"+savedProgramme._id)
+      .delete("/api/events/"+savedEvent._id)
       .expect(200)
       .then((res) => {
-        expect(res.body.message).toBe("Programme deleted successfully!");
+        expect(res.body.message).toBe("Event deleted successfully!");
       })
   });
 
@@ -126,39 +128,36 @@ describe("Programme", () => {
 
   test("should return 404 when the id doesn't exist",async function(){
     await request(app)
-      .get("/api/programmes/"+savedProgramme._id)
+      .get("/api/events/"+savedEvent._id)
       .expect(404)
       .then((response)=>{
-        expect(response.body.message).toBe("Programme not found with id "+savedProgramme._id)
+        expect(response.body.message).toBe("Event not found with id "+savedEvent._id)
       })
   })
 
   test("should return 404 when the id doesn't exist in delete",async function(){
       await request(app)
-        .delete("/api/programmes/"+savedProgramme._id)
+        .delete("/api/events/"+savedEvent._id)
         .expect(404)
         .then((response)=>{
-          expect(response.body.message).toBe("Programme not found with id "+savedProgramme._id)
+          expect(response.body.message).toBe("Event not found with id "+savedEvent._id)
         })
   })
     
   test("should return 404 when the id doesn't exist in delete",async function(){
     const data = {
-      title: "programme put test",
-      description: "programme put  test",
-      image : "",
-      videoLink : "http://127.0.0.1:5000/hicotech"
+      title: "event put test",
+      description: "event put  test",
+      etat:"Mes Joueurs",
+  
     };
       await request(app)
-        .put("/api/programmes/"+savedProgramme._id)
+        .put("/api/events/"+savedEvent._id)
         .send(data)
         .expect(404)
         .then((response)=>{
-          expect(response.body.message).toBe("Programme not found with id "+savedProgramme._id)
+          expect(response.body.message).toBe("Event not found with id "+savedEvent._id)
       })
     })
-  
-    
-
 
 });
