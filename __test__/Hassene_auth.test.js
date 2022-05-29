@@ -98,10 +98,7 @@ describe("Auth", () => {
   test("should login successfully and get access token", async () => {
     await request(app)
       .post("/api/login")
-      .send({
-        "email": "ayacoach@gmail.com",
-        "password": "ayacoach"
-    })
+      .send({ email: "hassene.ayoub@yahoo.fr", password: "123456" })
       .expect(200)
       .then((res) => {
         expect(res.body).toBeTruthy();
