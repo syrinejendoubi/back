@@ -9,10 +9,7 @@ exports.CreateStatistic = async (req, res, next) => {
       message: "Les champs ne peut pas être vide",
     });
   }
-  const existingStatistic = await Statistic.findOne({ statisticName });
-  if (existingStatistic) {
-    return next(new ErrorResponse("Statistique existe déjà.", 401));
-  }
+
   const statistic = new Statistic(statisticData);
   statistic
     .save()

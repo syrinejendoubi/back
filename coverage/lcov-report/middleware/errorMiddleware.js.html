@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">60.71% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/28</span>
+                <span class='fraction'>17/28</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">16.66% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>1/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">60.71% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/28</span>
+                <span class='fraction'>17/28</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -94,58 +94,58 @@
 <a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const ErrorResponse = require("../utils/errorResponse");
 &nbsp;
-const errorHandler = <span class="fstat-no" title="function not covered" >(err, req, res, next) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  console.log("Err :" + err.message);</span>
-<span class="cstat-no" title="statement not covered" >  let error = { message: err.message, ...err };</span>
-<span class="cstat-no" title="statement not covered" >  //Mongoose bad objectId</span>
-<span class="cstat-no" title="statement not covered" >  if (err.name === "CastError") {</span>
+const errorHandler = (err, req, res, next) =&gt; {
+  console.log("Err :" + err.message);
+  let error = { message: err.message, ...err };
+  //Mongoose bad objectId
+  if (err.name === "CastError") <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >    let message = `Données non trouvées avec l’id spécifié`;</span>
 <span class="cstat-no" title="statement not covered" >    error = new ErrorResponse(message, 404);</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >  //   Mongoose duplicate key</span>
-<span class="cstat-no" title="statement not covered" >  if (err.code === 11000) {</span>
+  //   Mongoose duplicate key
+  if (err.code === 11000) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >    const message = `La valeur entrée de ${Object.keys(</span>
 <span class="cstat-no" title="statement not covered" >      err.keyValue</span>
 <span class="cstat-no" title="statement not covered" >    )} est déja attribuée.`;</span>
 <span class="cstat-no" title="statement not covered" >    error = new ErrorResponse(message, 400);</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >  //   Mongoose validation error</span>
-<span class="cstat-no" title="statement not covered" >  if (err.name === "ValidationError") {</span>
+  //   Mongoose validation error
+  if (err.name === "ValidationError") <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >    const message = Object.values(err.errors).map((val) =&gt; val.message);</span>
 <span class="cstat-no" title="statement not covered" >    error = new ErrorResponse(message, 400);</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >  res.status(error.statusCode || 500).json({</span>
-<span class="cstat-no" title="statement not covered" >    success: false,</span>
-<span class="cstat-no" title="statement not covered" >    error: error.message || "Erreur de serveur",</span>
-<span class="cstat-no" title="statement not covered" >  });</span>
-<span class="cstat-no" title="statement not covered" >};</span>
+  res.status(<span class="branch-0 cbranch-no" title="branch not covered" >error.statusCode || 500).j</span>son({
+    success: false,
+    error: <span class="branch-0 cbranch-no" title="branch not covered" >error.message || "Erreur de serveur",</span>
+  });
+};
 module.exports = errorHandler;
 &nbsp;</pre></td></tr></table></pre>
 
@@ -154,7 +154,7 @@ module.exports = errorHandler;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sat May 21 2022 16:45:57 GMT+0100 (Central European Standard Time)
+                at Sun May 29 2022 12:04:48 GMT+0100 (Central European Standard Time)
             </div>
         <script src="../prettify.js"></script>
         <script>

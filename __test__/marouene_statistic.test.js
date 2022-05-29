@@ -88,28 +88,6 @@ describe("Statistique", () => {
         expect(response.body.message).toBe("Les champs ne peut pas être vide");
       });
   });
-  test("should return an error while adding a new statistic (duplicate statistic name)", async () => {
-    const data = {
-      statisticName: "test5",
-      statisticType: "compteur",
-      unit: "ml/h",
-      description: "Cette statistique permet de mesurer me test4 d'un joueur",
-      lien: "https://www.alloprof.qc.ca/fr/eleves/bv/sciences/la-masse-et-le-poids-s1004",
-      max: true,
-      nbreFois: 2,
-      alerted: true,
-      discipline: "6231bf886725280bf7288f05",
-    };
-    await request(app)
-      .post("/api/createStatistic")
-      .send(data)
-      .expect(401)
-      .then(async (response) => {
-        expect(response.body).toBeTruthy();
-        expect(response.body.error).toBe("Statistique existe déjà.");
-        expect(response.body.success).toBe(false);
-      });
-  });
 
   test("should get all statistics by discipline", () => {
     request(app)

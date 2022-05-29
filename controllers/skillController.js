@@ -9,10 +9,6 @@ exports.CreateSkill = async (req, res, next) => {
       message: "Les champs ne peut pas être vide",
     });
   }
-  const existingSkill = await Skill.findOne({ skillName });
-  if (existingSkill) {
-    return next(new ErrorResponse("compétence existe déjà.", 401));
-  }
   const skill = new Skill(skillData);
   skill
     .save()
