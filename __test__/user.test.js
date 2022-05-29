@@ -136,9 +136,59 @@ describe("User", () => {
         .then((response)=>{
           expect(response.body.message).toBe("User not found with id "+savedUser._id)
     })
-})
+  })
+
+  test("should not updateSubscription ", async () => {
+    const data = {
+        
+    };
+    await request(app)
+      .put("/api/subscription/6251728acbe770fc625053c6")
+      .send(data)
+      .expect(400)
+      .then(async (response) => {
+        expect(response.body.error).toBe("Veuillez fournir tous les renseignements requis");
+      });
+  });
+
+  test("should  update Subscription free ", async () => {
+    const data = {
+      subscription :"Free"
+    };
+    await request(app)
+      .put("/api/subscription/6251728acbe770fc625053c6")
+      .send(data)
+      .expect(200)
+      .then(async (response) => {
+          expect(response.body.message).toBe("l'abonnement a été mis à jour avec succès");
+      });
+  });
+
+  test("should  update Subscription Basic ", async () => {
+    const data = {
+      subscription :"Basic"
+    };
+    await request(app)
+      .put("/api/subscription/6251728acbe770fc625053c6")
+      .send(data)
+      .expect(200)
+      .then(async (response) => {
+          expect(response.body.message).toBe("l'abonnement a été mis à jour avec succès");
+      });
+  });
   
-    
+  test("should  update Subscription Premium ", async () => {
+    const data = {
+      subscription :"Premium"
+    };
+    await request(app)
+      .put("/api/subscription/6251728acbe770fc625053c6")
+      .send(data)
+      .expect(200)
+      .then(async (response) => {
+          expect(response.body.message).toBe("l'abonnement a été mis à jour avec succès");
+      });
+  }); 
 
 
 });

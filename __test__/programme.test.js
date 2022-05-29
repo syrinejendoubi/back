@@ -17,7 +17,7 @@ describe("Programme", () => {
     }),
     test("should get all programmes (empty programmes) ", async () => {
       await request(app)
-        .get("/api/programmes")
+        .get("/api/programme")
         .expect(200)
         .then((res) => {
           expect(Array.isArray(res.body)).toBeTruthy();
