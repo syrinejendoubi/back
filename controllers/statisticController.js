@@ -4,11 +4,14 @@ const ErrorResponse = require("../utils/errorResponse");
 exports.CreateStatistic = async (req, res, next) => {
   const statisticData = req.body;
   const { statisticName } = req.body;
+  /*
   if (Object.keys(statisticData).length === 0) {
     return res.status(400).send({
       message: "Les champs ne peut pas être vide",
     });
   }
+
+  */
 
   const statistic = new Statistic(statisticData);
   statistic

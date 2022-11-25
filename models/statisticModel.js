@@ -22,15 +22,12 @@ const statisticSchema = new mongoose.Schema(
     },
     lien: {
       type: String,
-      required: false,
     },
     max: {
       type: Boolean,
-      required: false,
     },
     nbreFois: {
       type: Number,
-      required: false,
     },
 
     alerted: {
@@ -38,8 +35,7 @@ const statisticSchema = new mongoose.Schema(
       default: true,
     },
     discipline:{
-      type: mongoose.Schema.Types.ObjectId,
-      required:true
+      type: mongoose.Schema.Types.ObjectId
     }
   },
   { timestamps: true }
