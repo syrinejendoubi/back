@@ -17,7 +17,7 @@ exports.protect = async (req, res, next) => {
   if (!token) {
     return next(
       new ErrorResponse(
-        "Vous n'êtes pas autorisé(e) à accéder à cette page",
+        "Vous n'êtes pas autorisé(e) à accéder à cette page !!",
         401
       )
     );
